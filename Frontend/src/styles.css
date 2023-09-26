@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files 
+    Color:
+    
+    #0D1F23
+    #132E35
+    #2D4A53
+    #69818D
+    #AFB3B7
+    #5A636A
+    
+    Font:
+
+*/
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;500;700&display=swap');
+*{
+    margin: 0;
+    padding:0;
+    box-sizing: border-box;
+}
