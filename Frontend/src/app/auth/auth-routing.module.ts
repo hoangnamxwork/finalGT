@@ -5,9 +5,8 @@ import { SignupComponent } from './signup/signup.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 
 const routes: Routes = [
-  {
-    path:'',
-    component:WelcomeComponent,
+  { path: '', 
+    component: WelcomeComponent 
   },
   {
     path: 'signup',
@@ -21,6 +20,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AuthRoutingModule { }
+export class AuthRoutingModule {}

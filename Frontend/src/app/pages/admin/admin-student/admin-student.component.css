@@ -1,0 +1,23 @@
+h1 {
+  color: #fcfbf4;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td,
+th {
+  width: 25%;
+}
+
+.admin-title{
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+}
+

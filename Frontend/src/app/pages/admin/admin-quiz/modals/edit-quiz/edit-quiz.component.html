@@ -1,0 +1,64 @@
+<div mat-dialog-title>
+    <h1>Thêm câu hỏi</h1>
+  </div>
+  <form [formGroup]="editQuizForm" (ngSubmit)="onEditQuizSubmit()">
+    <div mat-dialog-content class="content">
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>Câu hỏi</mat-label>
+          <input matInput type="text" formControlName="quizContent" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>ID Môn học</mat-label>
+          <input matInput type="number" formControlName="subjectID" min="0" max="8" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <mat-label>Lựa chọn 1</mat-label>
+          <input matInput type="text" formControlName="option1" />
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <mat-label>Lựa chọn 2</mat-label>
+          <input matInput type="text" formControlName="option2" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <mat-label>Lựa chọn 3</mat-label>
+          <input matInput type="text" formControlName="option3" />
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <mat-label>Lựa chọn 4</mat-label>
+          <input matInput type="text" formControlName="option4" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+          <mat-label>Đáp án</mat-label>
+          <input matInput type="number" formControlName="answer" min="0" max="3"/>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions class="action">
+      <button mat-raised-button type="button" [mat-dialog-close]="false">
+        Cancel
+      </button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+      >
+        Sửa
+      </button>
+    </div>
+  </form>
+  

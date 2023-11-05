@@ -1,8 +1,10 @@
-﻿using FinalGTAPI.Data;
-using FinalGTAPI.Models;
-using FinalGTAPI.Services.User;
-using Microsoft.AspNetCore.Http;
+﻿
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using FinalGTAPI.Data;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
+using AutoMapper;
+using FinalGTAPI.DTO;
 
 namespace FinalGTAPI.Controllers
 {
@@ -10,70 +12,144 @@ namespace FinalGTAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserService? _userService;
         private readonly FinalGTDbContext _context;
-
-        public UserController(IUserService userService, FinalGTDbContext context)
+        private readonly IMapper _mapper;
+        public UserController(FinalGTDbContext context, IMapper mapper)
         {
-            _userService = userService;
             _context = context;
-
+            _mapper = mapper;
         }
 
-        //User
 
-        [HttpGet("GetAllUsers")]
-
-        public async Task<ActionResult<List<UserModel>>> GetAllUsers()
+        // GET: api/User
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await _userService.GetAllUsers();
-        }
-
-        [HttpPost("AddUser")]
-
-        public async Task<ActionResult<List<UserModel>>> AddUser(UserModel user)
-        {
-            var result = await _userService.AddUser(user);
-            return Ok(user);
-        }
-
-        [HttpDelete("DeleteUser{id}")]
-
-        public async Task<ActionResult<List<UserModel>>> DeleteUser(int id)
-        {
-            var delete = await _userService.DeleteUser(id);
-            if (delete is null)
+            if (_context.Users == null)
             {
-                return NotFound("User not found");
+                return NotFound();
             }
-            return Ok(delete);
+            return await _context.Users.ToListAsync();
         }
 
-        [HttpPut("UpdateUser{id}")]
-
-        public async Task<ActionResult<List<UserModel>>> UpdateUser(int id, UserModel user)
-        {
-            var update = await _userService.UpdateUser(id, user);
-            if (update is null)
-            {
-                return NotFound("User not found!");
-
-            }
-            return Ok(update);
-        }
-
-        //Find user ID
-
+        // GET: api/User/5
         [HttpGet("{id}")]
-        public IActionResult GetUserID(int id)
+        public async Task<ActionResult<User>> GetUserModel(int id)
         {
-            var user = _context.Users.FirstOrDefault(u => u.UserID == id);
-            if (user == null)
+            if (_context.Users == null)
             {
-                return NotFound("User not found!");
+                return NotFound();
             }
+            var userModel = await _context.Users.FirstOrDefaultAsync(x => x.UserID == id);
+
+            if (userModel == null)
+            {
+                return NotFound();
+            }
+
+            return userModel;
+        }
+
+        // PUT: api/User/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}")]
+        public async Task<ActionResult<List<User>>> PutUserModel(int id, User updatedUser)
+        {
+
+            var user = await _context.Users.FindAsync(id);
+
+            user.FirstName = updatedUser.FirstName;
+            user.LastName = updatedUser.LastName;
+            user.Email = updatedUser.Email;
+            user.UserName = updatedUser.UserName;
+            user.Password = updatedUser.Password;
+            user.Role = updatedUser.Role;
+
+
+            await _context.SaveChangesAsync();
+
             return Ok(user);
         }
+
+
+        // POST: api/User
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<User>> PostUserModel([FromBody] User userModel)
+        {
+            if (_context.Users == null)
+            {
+                return Problem("Entity set 'FinalGTDbContext.Users'  is null.");
+            }
+            _context.Users.Add(userModel);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetUserModel", new { id = userModel.UserID }, userModel);
+        }
+
+        // DELETE: api/User/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUserModel(int id)
+        {
+            if (_context.Users == null)
+            {
+                return NotFound();
+            }
+            var userModel = await _context.Users.FindAsync(id);
+            if (userModel == null)
+            {
+                return NotFound();
+            }
+
+            _context.Users.Remove(userModel);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        private bool UserModelExists(int id)
+        {
+            return (_context.Users?.Any(e => e.UserID == id)).GetValueOrDefault();
+        }
+
+
+        ///DTOs
+        /// 
+
+
+        [HttpGet("DTO")]
+        public async Task<ActionResult<IEnumerable<User>>> GetUsersDTO()
+        {
+            return Ok(_context.Users.Select(user => _mapper.Map<UserDTO>(user)));
+        }
+
+        [HttpPost("DTO")]
+        public async Task<ActionResult<List<UserDTO>>> PostUserDTO(UserDTO newUser)
+        {
+            var user = _mapper.Map<User>(newUser);
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+            return CreatedAtAction("GetUserModel", new { id = newUser.UserID }, newUser);
+        }
+
+        [HttpPut("DTO/{id}")]
+
+        public async Task<ActionResult<List<User>>> PutUserDTO(int id, UserDTO updatedUser)
+        {
+            var user = await _context.Users.FindAsync(id);
+            var userDTO = _mapper.Map<User>(user);
+            user.FirstName = updatedUser.FirstName;
+            user.LastName = updatedUser.LastName;
+            user.Email = updatedUser.Email;
+            user.UserName = updatedUser.UserName;
+            user.Password = updatedUser.Password;
+            user.Role = updatedUser.Role;
+
+
+            await _context.SaveChangesAsync();
+
+            return Ok(user);
+        }
+
     }
 }
-

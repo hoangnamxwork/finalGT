@@ -1,0 +1,88 @@
+<div class="d-flex justify-content-between admin-title">
+  <h1>Quản lý câu hỏi</h1>
+  <button class="btn btn-primary" (click)="OpenAddQuiz()">Thêm</button>
+</div>
+<mat-form-field>
+  <mat-label>Filter</mat-label>
+  <input
+    matInput
+    (keyup)="applyFilter($event)"
+    placeholder="Tìm kiếm gì đó..."
+    #input
+  />
+</mat-form-field>
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort>
+    <!-- ID Column -->
+    <ng-container matColumnDef="quizID">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let row">{{ row.quizID }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="subjectID">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>SubjectID</th>
+      <td mat-cell *matCellDef="let row">{{ row.subjectID }}</td>
+    </ng-container>
+
+    <!--  -->
+    <ng-container matColumnDef="quizContent">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Câu hỏi</th>
+      <td mat-cell *matCellDef="let row">{{ row.quizContent }}</td>
+    </ng-container>
+
+    <!--  -->
+    <ng-container matColumnDef="option1">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Lựa chọn 1</th>
+      <td mat-cell *matCellDef="let row">{{ row.option1 }}</td>
+    </ng-container>
+
+    <!--  -->
+    <ng-container matColumnDef="option2">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Lựa chọn 2</th>
+      <td mat-cell *matCellDef="let row">{{ row.option2 }}</td>
+    </ng-container>
+
+    <!--  -->
+    <ng-container matColumnDef="option3">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Lựa chọn 3</th>
+      <td mat-cell *matCellDef="let row">{{ row.option3 }}</td>
+    </ng-container>
+
+    <!--  -->
+    <ng-container matColumnDef="option4">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Lựa chọn 4</th>
+      <td mat-cell *matCellDef="let row">{{ row.option4 }}</td>
+    </ng-container>
+
+    <!--  -->
+    <ng-container matColumnDef="answer">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Đáp án</th>
+      <td mat-cell *matCellDef="let row">{{ row.answer }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    <!-- Row Action -->
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-icon-button color="primary" (click)="OpenEditQuiz(row)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="OpenDeleteQuiz(row.quizID)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+  </table>
+
+  <mat-paginator
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    aria-label="Select page of users"
+  ></mat-paginator>
+</div>

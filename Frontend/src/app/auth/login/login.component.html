@@ -1,21 +1,4 @@
 <div class="background">
-  <div class="header">
-    <div class="logo">
-      <a id="logo" routerLink="">ProPrep.vn</a>
-    </div>
-    <div class="navibar">
-      <a id="home" routerLink="">Trang chủ</a>
-      <a id="about" routerLink="/login">Về trang web</a>
-      <a id="test" routerLink="/login">Luyện thi</a>
-      <a id="library" routerLink="/login">Thư viện</a>
-      <a id="bookshelf" routerLink="/login">Giá sách</a>
-      <a id="pomodoro" routerLink="/login">Pomodoro</a>
-    </div>
-    <div class="auth">
-      <button id="login" routerLink="/login">Đăng nhập</button>
-      <button id="signup" routerLink="/signup">Đăng ký</button>
-    </div>
-  </div>
   <div class="body">
     <div class="login">
       <div class="heading">
@@ -30,18 +13,18 @@
             <div
               class="input-field"
               [class.error]="
-                signinForm.controls['username'].dirty &&
-                signinForm.hasError('required', 'username')
+                signinForm.controls['UserName'].dirty &&
+                signinForm.hasError('required', 'UserName')
               "
             >
-              <span class="fa fa-user"></span>
-              <input formControlName="username" type="text" />
+              <span class="fa-solid fa-user p-2"></span>
+              <input formControlName="UserName" type="text" />
             </div>
           </div>
           <small
             *ngIf="
-              signinForm.controls['username'].dirty &&
-              signinForm.hasError('required', 'username')
+              signinForm.controls['UserName'].dirty &&
+              signinForm.hasError('required', 'UserName')
             "
             class="text-danger"
             >Cần tên đăng nhập của bạn!</small
@@ -53,19 +36,19 @@
             <div
               class="input-field"
               [class.error]="
-                signinForm.controls['password'].dirty &&
-                signinForm.hasError('required', 'password')
+                signinForm.controls['Password'].dirty &&
+                signinForm.hasError('required', 'Password')
               "
             >
-              <span class="fa fa-lock"></span>
-              <input formControlName="password" [type]="type" />
+              <span class="fas fa-lock p-2"></span>
+              <input formControlName="Password" [type]="type" />
               <span (click)="showPassword()" class="fa {{ eyeIcon }}"></span>
             </div>
           </div>
           <small
             *ngIf="
-              signinForm.controls['password'].dirty &&
-              signinForm.hasError('required', 'password')
+              signinForm.controls['Password'].dirty &&
+              signinForm.hasError('required', 'Password')
             "
             class="text-danger"
             >Cần mật khẩu của bạn!</small
@@ -86,5 +69,4 @@
         </form>
       </div>
     </div>
-  </div>
 </div>

@@ -8,8 +8,14 @@ namespace FinalGTAPI.Data
         public FinalGTDbContext(DbContextOptions<FinalGTDbContext> options) : base(options)
             { }
 
-        public DbSet<UserModel> Users { get; set; }
+        public DbSet<User> Users { get; set; }
 
-        public DbSet<QuizModel> Quizes { get; set; }
+        public DbSet<Quiz> Quizes { get; set; }
+
+        public DbSet<Subject> Subjects { get; set; }
+
+        public DbSet<Result> Results { get; set; }
+
+        public DbSet<TestResult> TestResults { get; set; }
     }
 }

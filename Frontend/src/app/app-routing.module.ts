@@ -1,5 +1,7 @@
+import { authGuard } from 'src/app/shared/archived/auth-guard/auth.guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthClassGuard } from './shared/guards/auth-class.guard';
 
 const routes: Routes = [
   {
@@ -11,6 +13,16 @@ const routes: Routes = [
     redirectTo: 'welcome',
     pathMatch: "full"
   },
+  {
+    path: 'home',
+    loadChildren: ()=> import('./pages/home/home.module').then((m)=> m.HomeModule),
+    /*canActivate: [AuthClassGuard]*/
+  },
+  {
+    path:'admin',
+    loadChildren:()=> import('./pages/admin/admin.module').then((m) => m.AdminModule),
+    /*canActivate: [AuthClassGuard]*/
+  }
 ];
 
 @NgModule({

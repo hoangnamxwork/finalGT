@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
 import ValidateForm from '../validateForm';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
-
+import { AuthService } from '../../shared/services/auth/auth.service';
+import { UserDataService } from 'src/app/shared/services/user-data/user-data.service';
 
 @Component({
   selector: 'app-login',
@@ -16,32 +16,51 @@ export class LoginComponent {
   showPass: boolean = false;
   type: string = 'password';
   eyeIcon: string = 'fa-eye-slash';
+  role: string = '';
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private auth: AuthService,
     private toast: NgToastService,
-    private router: Router,) {}
+    private userData: UserDataService,
+    private route: Router
+  ) {}
 
   onSignIn() {
     if (this.signinForm.valid) {
       //Send the object to database
       this.auth.SignIn(this.signinForm.value).subscribe({
         next: (res) => {
+          /*localStorage.setItem('LoginToken', 'true');*/
+          this.auth.storeAuthToken(res.token);
+          let tokenPayLoad = this.auth.decodedToken();
+          this.userData.setFullName(tokenPayLoad.name);
+          this.userData.setRole(tokenPayLoad.role);
+          this.userData.getRole().subscribe((val) => {
+            const rolefromToken = this.auth.getRoleFromToken();
+            this.role = val || rolefromToken;
+          });
+          if (this.role) {
+            if (this.role === 'Student') {
+              this.route.navigate(['home']);
+            } else if (this.role === 'Admin') {
+              this.route.navigate(['admin']);
+            }
+          }
           this.toast.success({
-            detail: 'SUCCESS',
-            summary: res.message,
-            duration: 3000,
+            detail: 'THÀNH CÔNG',
+            summary: 'Đăng nhập thành công!',
+            duration: 4000,
           });
           this.signinForm.reset();
-          this.router.navigateByUrl('/dashboard');
         },
         error: (err) => {
           console.log(err);
+          localStorage.setItem('LoginToken', 'false');
           this.toast.error({
-            detail: 'ERROR',
-            summary: 'Something went wrong!',
-            duration: 3000,
+            detail: 'LỖI',
+            summary: 'Có gì đó đã bị lỗi!',
+            duration: 4000,
           });
         },
       });
@@ -59,8 +78,8 @@ export class LoginComponent {
 
   ngOnInit(): void {
     this.signinForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required],
+      UserName: ['', Validators.required],
+      Password: ['', Validators.required],
     });
   }
 }

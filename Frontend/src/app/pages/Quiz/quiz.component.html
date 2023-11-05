@@ -1,0 +1,117 @@
+<div class="background">
+  <app-nav-bar></app-nav-bar>
+  <div class="select" *ngIf="isSubjectOn">
+    <div class="select-title">
+      <h1>Hãy chọn đề thi bạn mong muốn</h1>
+    </div>
+    <div>
+      <form [formGroup]="QuizSelect">
+        <div class="subjectselect">
+          <div>
+            <label>Môn học<span class="mandatory"> * </span></label>
+          </div>
+          <div
+            [class.error]="
+              QuizSelect.controls['Subject'].dirty &&
+              QuizSelect.hasError('required', 'Subject')
+            "
+          >
+            <select class="form-select" formControlName="Subject">
+              <optgroup label="Môn bắt buộc">
+                <option value="1">Toán</option>
+                <option value="2">Anh</option>
+              </optgroup>
+              <optgroup label="Môn khoa học tự nhiên">
+                <option value="3">Lý</option>
+                <option value="4">Hóa</option>
+                <option value="5">Sinh</option>
+              </optgroup>
+              <optgroup label="Môn khoa học xã hội">
+                <option value="6">Lịch sử</option>
+                <option value="7">Địa lý</option>
+                <option value="8">GDCD</option>
+              </optgroup>
+            </select>
+            <div class="button">
+              <button (click)="SubjectSelect()" type="submit">Chọn</button>
+              <button (click)="Cancel()" type="submit">Hủy</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="container" *ngIf="isQuizOn">
+    <div class="card">
+      <div class="quiz">
+        <div class="quiz-header d-flex justify-content-around py-3">
+          <div class="quiz-remain">
+            <span>Câu {{ quiz.quizProgress }} / 40</span>
+          </div>
+          <div class="quiz-timer">
+            <span
+              >{{ minutes | number : "2.0" }} : {{ seconds | number : "2.0" }}
+            </span>
+          </div>
+        </div>
+        <div class="quiz-content">
+          <span>{{ quiz.qns[quiz.quizProgress].quizContent }}</span>
+        </div>
+        <div
+          class="quiz-selection"
+          *ngFor="let option of quiz.qns[quiz.quizProgress].options; let i = index"
+        >
+          <ol>
+            <li (click)="selectOption(i)">
+              <div class="card">{{ option }}</div>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container" *ngIf="isResultOn">
+    <div class="card">
+      <div class="d-flex justify-content-around py-3">
+        <div>
+          <div>
+            <h3>Hoàn thành!</h3>
+          </div>
+          <div>
+            <h3>{{ quiz.correctAnswerCount }}/{{quiz.qns.length}}</h3>
+          </div>
+        </div>
+        <div>
+          <button class="btn" (click)="onSubmit()">Nộp bài</button>
+        </div>
+      </div>
+    </div>
+    <!-- Đáp án -->
+    <ng-container *ngFor="let qn of quiz.qns; let i = index">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title">{{ i + 1 }}. {{qn.quizContent}}</span>
+        </div>
+        <div class="card-body">
+          <ul class="list-group-item">
+            <ng-container *ngFor="let option of qn.options; let j = index" class="border border-black my-1">
+              <li *ngIf="option != null" >
+                {{ option }}
+                <span
+                  class="badge text-bg-success mx-2"
+                  *ngIf="qn.answer == j"
+                  >Đúng</span
+                >
+                <span
+                  class="badge text-bg-info"
+                  *ngIf="selectedOption == j"
+                  >Đã chọn</span
+                >
+              </li>
+            </ng-container>
+          </ul>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

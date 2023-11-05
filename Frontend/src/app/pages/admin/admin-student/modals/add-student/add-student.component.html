@@ -1,0 +1,54 @@
+<div mat-dialog-title>
+  <h1>Thêm học sinh</h1>
+</div>
+<form [formGroup]="addUserForm" (ngSubmit)="onAddStudentSubmit()">
+  <div mat-dialog-content class="content">
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <mat-label>Tên</mat-label>
+          <input matInput type="text" formControlName="firstName" />
+        </mat-form-field>
+      </div>
+
+      <div class="col">
+        <mat-form-field appearance="outline">
+          <mat-label>Họ</mat-label>
+          <input matInput type="text" formControlName="lastName" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="text" formControlName="email" />
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Tên đăng nhập</mat-label>
+        <input matInput type="text" formControlName="userName" />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Mật khẩu</mat-label>
+        <input matInput type="text" formControlName="password" />
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Vai trò</mat-label>
+        <mat-select formControlName="role">
+          <mat-option *ngFor="let role of roles" [value]="role"
+            >{{ role }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions class="action">
+    <button mat-raised-button type="button" [mat-dialog-close]="false">
+      Cancel
+    </button>
+    <button mat-raised-button color="primary" type="submit">Thêm</button>
+  </div>
+</form>

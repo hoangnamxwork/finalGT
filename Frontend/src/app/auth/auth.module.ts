@@ -7,6 +7,7 @@ import { SignupComponent } from './signup/signup.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [LoginComponent, SignupComponent, WelcomeComponent],
@@ -15,6 +16,7 @@ import { HttpClientModule } from '@angular/common/http';
     AuthRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    SharedModule
   ],
 })
 export class AuthModule {}

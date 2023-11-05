@@ -1,232 +1,135 @@
 <div class="background">
-    <div class="header">
-      <div class="logo">
-        <a id="logo" routerLink="">ProPrep.vn</a>
-      </div>
-      <div class="navibar">
-        <a id="home" routerLink="">Trang chủ</a>
-        <a id="about" routerLink="/login">Về trang web</a>
-        <a id="test" routerLink="/login">Luyện thi</a>
-        <a id="library" routerLink="/login">Thư viện</a>
-        <a id="bookshelf" routerLink="/login">Giá sách</a>
-        <a id="pomodoro" routerLink="/login">Pomodoro</a>
-      </div>
-      <div class="auth">
-        <button id="login" routerLink="/login">Đăng nhập</button>
-        <button id="signup" routerLink="/signup">Đăng ký</button>
-      </div>
-    </div> 
-    <div class="body">
-      <div class="container">
-        <div class="row">
-          <div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3">
-            <div class="panel border bg-white">
-              <div class="panel-heading">
-                <h3 class="pt-3 font-weight-bold">Sign Up</h3>
-              </div>
-              <div class="panel-body p-3">
-                <form [formGroup]="signupForm">
-                  <!--Full name-->
-                  <div class="form-group pt-3">
-                    <label class="form-text"
-                      >Full name<span class="mandatory"> *</span></label
-                    >
-                    <div
-                      class="input-field"
-                      [class.error]="
-                        signupForm.controls['fullname'].dirty &&
-                        signupForm.hasError('required', 'fullname')
-                      "
-                    >
-                      <span class="fa fa-address-card p-2"></span>
-                      <input formControlName="fullname" type="text" />
-                    </div>
-                  </div>
-                  <small
-                    *ngIf="
-                      signupForm.controls['fullname'].dirty &&
-                      signupForm.hasError('required', 'fullname')
+
+  <div class="body">
+    <div class="container">
+      <div class="row">
+        <div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3">
+          <div class="panel border bg-white">
+            <div class="panel-heading">
+              <h3 class="pt-3 font-weight-bold">Đăng ký</h3>
+            </div>
+            <div class="panel-body p-3">
+              <form [formGroup]="signupForm">
+                <!--Fullname-->
+                <div class="form-group pt-3">
+                  <label class="form-text"
+                    >Tên đầy đủ<span class="mandatory"> *</span></label
+                  >
+                  <div
+                    class="input-field"
+                    [class.error]="
+                      signupForm.controls['FullName'].dirty &&
+                      signupForm.hasError('required', 'FullName')
                     "
-                    class="text-danger"
-                    >Full name is required</small
                   >
-                  <!--Gender-->
-                  <div class="form-group pt-3">
-                    <label class="form-text"
-                      >Gender<span class="mandatory"> *</span></label
-                    >
-                    <div
-                      [class.error]="
-                        signupForm.controls['gender'].dirty &&
-                        signupForm.hasError('required', 'gender')
-                      "
-                    >
-                      <div class="form-check form-check-inline">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="gender"
-                          id="male"
-                          value="male"
-                          formControlName="gender"
-                          for="male"
-                        />
-                        <label class="form-check-label" for="male">Male</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="gender"
-                          id="female"
-                          value="female"
-                          formControlName="gender"
-                          for="female"
-                        />
-                        <label class="form-check-label" for="female">Female</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="gender"
-                          id="others"
-                          value="others"
-                          formControlName="gender"
-                          for="others"
-                        />
-                        <label class="form-check-label" for="others">Others</label>
-                      </div>
-                    </div>
+                    <span class="fas fa-address-card p-2"></span>
+                    <input formControlName="FullName" type="text" />
                   </div>
-                  <small
-                    *ngIf="
-                      signupForm.controls['gender'].dirty &&
-                      signupForm.hasError('required', 'gender')
+                </div>
+                <small
+                  *ngIf="
+                    signupForm.controls['FullName'].dirty &&
+                    signupForm.hasError('required', 'FullName')
+                  "
+                  class="text-danger"
+                  >Bạn cần nhập tên đầy đủ của mình!</small
+                >
+                <!--Username-->
+                <div class="form-group pt-3">
+                  <label class="form-text"
+                    >Tên đăng nhập<span class="mandatory"> *</span></label
+                  >
+                  <div
+                    class="input-field"
+                    [class.error]="
+                      signupForm.controls['UserName'].dirty &&
+                      signupForm.hasError('required', 'UserName')
                     "
-                    class="text-danger"
-                    >Gender is required</small
                   >
-                  <!--Username-->
-                  <div class="form-group pt-3">
-                    <label class="form-text"
-                      >Username<span class="mandatory"> *</span></label
-                    >
-                    <div
-                      class="input-field"
-                      [class.error]="
-                        signupForm.controls['username'].dirty &&
-                        signupForm.hasError('required', 'username')
-                      "
-                    >
-                      <span class="fa fa-user p-2"></span>
-                      <input type="text" formControlName="username" />
-                    </div>
+                    <span class="fas fa-user p-2"></span>
+                    <input type="text" formControlName="UserName" />
                   </div>
-                  <small
-                    *ngIf="
-                      signupForm.controls['username'].dirty &&
-                      signupForm.hasError('required', 'username')
+                </div>
+                <small
+                  *ngIf="
+                    signupForm.controls['UserName'].dirty &&
+                    signupForm.hasError('required', 'UserName')
+                  "
+                  class="text-danger"
+                  >Bạn cần điền tên đăng nhập!</small
+                >
+                <!--Password-->
+                <div class="form-group pt-3">
+                  <label class="form-text"
+                    >Mật khẩu<span class="mandatory"> *</span></label
+                  >
+                  <div
+                    class="input-field"
+                    [class.error]="
+                      signupForm.controls['Password'].dirty &&
+                      signupForm.hasError('required', 'Password')
                     "
-                    class="text-danger"
-                    >Username name is required</small
                   >
-                  <!--Password-->
-                  <div class="form-group pt-3">
-                    <label class="form-text"
-                      >Password<span class="mandatory"> *</span></label
-                    >
-                    <div
-                      class="input-field"
-                      [class.error]="
-                        signupForm.controls['password'].dirty &&
-                        signupForm.hasError('required', 'password')
-                      "
-                    >
-                      <span class="fas fa-lock p-2"></span>
-                      <input [type]="type" formControlName="password" />
-                      <span
-                        (click)="showPassword()"
-                        class="fa {{ eyeIcon }}"
-                      ></span>
-                    </div>
-                    <span class="form-text"
-                      >Reminder: Never, ever share your password with anyone</span
-                    >
+                    <span class="fas fa-lock p-2"></span>
+                    <input [type]="type" formControlName="Password" />
+                    <span
+                      (click)="showPassword()"
+                      class="fa {{ eyeIcon }}"
+                    ></span>
                   </div>
-                  <small
-                    *ngIf="
-                      signupForm.controls['password'].dirty &&
-                      signupForm.hasError('required', 'password')
+                  <span class="form-text"
+                    >Nhắc nhở: Không bao giờ chia sẻ Mật khẩu của bạn với bất kỳ ai.</span
+                  >
+                </div>
+                <small
+                  *ngIf="
+                    signupForm.controls['Password'].dirty &&
+                    signupForm.hasError('required', 'Password')
+                  "
+                  class="text-danger"
+                  >Bạn cần điền mật khẩu!</small
+                >
+                <!--Phone Number-->
+                <div class="form-group pt-3">
+                  <label class="form-text"
+                    >Số điện thoại<span class="mandatory"> *</span></label
+                  >
+                  <div
+                    class="input-field"
+                    [class.error]="
+                      signupForm.controls['PhoneNumber'].dirty &&
+                      signupForm.hasError('required', 'PhoneNumber')
                     "
-                    class="text-danger"
-                    >Password is required</small
                   >
-                  <!--Age-->
-                  <div class="form-group pt-3">
-                    <label class="form-text"
-                      >Age<span class="mandatory"> *</span></label
-                    >
-                    <div
-                      class="input-field"
-                      [class.error]="
-                        signupForm.controls['age'].dirty &&
-                        signupForm.hasError('required', 'age')
-                      "
-                    >
-                      <span class="fa fa-hourglass p-2"></span>
-                      <input type="number" formControlName="age" />
-                    </div>
+                    <span class="fas fa-phone-square-alt p-2"></span>
+                    <input type="text" formControlName="PhoneNumber" />
                   </div>
-                  <small
-                    *ngIf="
-                      signupForm.controls['age'].dirty &&
-                      signupForm.hasError('required', 'age')
-                    "
-                    class="text-danger"
-                    >Age is required</small
-                  >
-                  <!--Phone Number-->
-                  <div class="form-group pt-3">
-                    <label class="form-text"
-                      >Phone Number<span class="mandatory"> *</span></label
-                    >
-                    <div
-                      class="input-field"
-                      [class.error]="
-                        signupForm.controls['phoneNumber'].dirty &&
-                        signupForm.hasError('required', 'phoneNumber')
-                      "
-                    >
-                      <span class="fa fa-phone-square p-2"></span>
-                      <input type="text" formControlName="phoneNumber" />
-                    </div>
-                  </div>
-                  <small
-                    *ngIf="
-                      signupForm.controls['phoneNumber'].dirty &&
-                      signupForm.hasError('required', 'phoneNumber')
-                    "
-                    class="text-danger"
-                    >Phone number is required</small
-                  >
-                  
-                  <button
-                    (click)="onSignUp()"
-                    type="submit"
-                    class="btn btn-primary btn-block mt-4 w-100"
-                  >
-                    Sign Up !
-                  </button>
-                  <div class="text-center pt-4 text-muted">
-                    Already have an account?
-                    <a id="signinnow" routerLink="/login">Sign in now!</a>
-                  </div>
-                </form>
-              </div>
+                </div>
+                <small
+                  *ngIf="
+                    signupForm.controls['PhoneNumber'].dirty &&
+                    signupForm.hasError('required', 'PhoneNumber')
+                  "
+                  class="text-danger"
+                  >Bạn cần điền số điện thoại</small
+                >
+
+                <button
+                  (click)="onSignUp()"
+                  type="submit"
+                  class="btn btn-primary btn-block mt-4 w-100"
+                >
+                  Đăng ký!
+                </button>
+                <div class="text-center pt-4 text-muted">
+                  Bạn đã có tài khoản? 
+                  <a id="signinnow" routerLink="/login">Đăng nhập ngay!</a>
+                </div>
+              </form>
             </div>
           </div>
         </div>
       </div>
     </div>
-  
+  </div>
+</div>

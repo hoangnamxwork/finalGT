@@ -1,6 +1,9 @@
-using FinalGTAPI.Data;
-using FinalGTAPI.Services.User;
+global using FinalGTAPI.Models;
+global using FinalGTAPI.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,18 +11,33 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<FinalGTDbContext>(
     options => options.UseNpgsql(builder.Configuration.GetConnectionString("FinalGTtoDB"))
     );
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddCors(o => o.AddPolicy("FinalGTCors", build =>
 {
     build.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
 }));
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(x =>
+{
+    x.RequireHttpsMetadata = false;
+    x.SaveToken = true;
+    x.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("finalGTverysecretkey")),
+        ValidateAudience = false, 
+        ValidateIssuer = false
+    };
+});
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -33,6 +51,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors("FinalGTCors");
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
