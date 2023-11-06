@@ -10,6 +10,7 @@ using FinalGTAPI.DTOs;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using FinalGTAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FinalGTAPI.Controllers
 {
@@ -44,6 +45,7 @@ namespace FinalGTAPI.Controllers
 
         // GET: api/Quiz/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Quiz>> Get(int id)
         {
             if (_context.Quizes == null)
@@ -64,6 +66,7 @@ namespace FinalGTAPI.Controllers
         //GET: quizID
 
         [HttpGet("GetQuiz/{id}")]
+        [Authorize(Roles = "Admin")]
 
         public async Task<ActionResult<int>> GetQuiz(int id)
         {
@@ -109,6 +112,7 @@ namespace FinalGTAPI.Controllers
         //GET: RANDOM SUBJECT QUIZ
 
         [HttpGet("RandomSubjectQuiz/{id}")]
+        [Authorize(Roles = "Student")]
         public async Task<ActionResult<IEnumerable<Quiz>>> GetRandomSubjectQuiz(int id)
         {
             if (_context.Quizes == null)
@@ -156,6 +160,7 @@ namespace FinalGTAPI.Controllers
         // PUT: api/Quiz/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PutQuizModel(int id, Quiz quizModel)
         {
             if (id != quizModel.QuizID)
@@ -187,6 +192,7 @@ namespace FinalGTAPI.Controllers
         // POST: api/Quiz
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Quiz>> PostQuizModel(Quiz quizModel)
         {
             if (_context.Quizes == null)
@@ -200,7 +206,9 @@ namespace FinalGTAPI.Controllers
         }
 
         //PostTestResult
+        
         [HttpPost("PostTestResult")]
+        [Authorize(Roles = "Student")]
         public async Task<ActionResult<TestResult>> PostTestResult([FromBody] TestResultDTO newTestResultDTO)
         {
             if (_context.TestResults == null)
@@ -209,7 +217,7 @@ namespace FinalGTAPI.Controllers
             }
             var newTestResult = _mapper.Map<TestResult>(newTestResultDTO);
             var user = await _context.Users.FirstOrDefaultAsync(c => c.UserID == int.Parse(_httpContextAccessor.HttpContext!.User
-                            .FindFirstValue(ClaimTypes.NameIdentifier)!));
+                            .FindFirstValue(ClaimTypes.NameIdentifier)));
 
 
             var subject = await _context.Subjects
@@ -219,7 +227,7 @@ namespace FinalGTAPI.Controllers
             {
                 TestScore = newTestResult.TestScore,
                 SubjectID = subject.SubjectID,
-                User = user
+                UserID = user.UserID
             };
             
             _context.TestResults.Add(testResult);
@@ -234,6 +242,7 @@ namespace FinalGTAPI.Controllers
 
     // DELETE: api/Quiz/5
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteQuizModel(int id)
         {
             if (_context.Quizes == null)
@@ -260,12 +269,14 @@ namespace FinalGTAPI.Controllers
         //DTO
 
         [HttpGet("DTO")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<Quiz>>> GetQuizesDTO()
         {
             return Ok(_context.Quizes.Select(quiz => _mapper.Map<QuizDTO>(quiz)));
         }
 
         [HttpPost("DTO")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Quiz>> PostQuiz(QuizDTO newQuiz)
         {
             var subject = await _context.Subjects
@@ -288,6 +299,7 @@ namespace FinalGTAPI.Controllers
 
 
         [HttpPut("DTO/{id}")]
+        [Authorize(Roles = "Admin")]
 
         public async Task<ActionResult<List<Quiz>>> PutQuiz(int id, QuizDTO updatedQuiz)
         {

@@ -46,11 +46,19 @@ export class AuthService {
   
   getfullNameFromToken(){
     if(this.userPayload)
-    return this.userPayload.name;
+    return this.userPayload.unique_name;
   }
 
   getRoleFromToken(){
     if(this.userPayload)
     return this.userPayload.role;
   }
+  getUserIDfromToken(){
+    if(this.userPayload){
+      return this.userPayload.nameid;
+    }
+  }
+
+
+  
 }

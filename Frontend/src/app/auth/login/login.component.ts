@@ -33,12 +33,14 @@ export class LoginComponent {
         next: (res) => {
           /*localStorage.setItem('LoginToken', 'true');*/
           this.auth.storeAuthToken(res.token);
-          let tokenPayLoad = this.auth.decodedToken();
-          this.userData.setFullName(tokenPayLoad.name);
+          let tokenPayLoad = this.auth.decodedToken();     
+          this.userData.setFullName(tokenPayLoad.unique_name);
+          this.userData.setUserID(tokenPayLoad.nameid);
           this.userData.setRole(tokenPayLoad.role);
           this.userData.getRole().subscribe((val) => {
             const rolefromToken = this.auth.getRoleFromToken();
             this.role = val || rolefromToken;
+            console.log(this.role);
           });
           if (this.role) {
             if (this.role === 'Student') {
@@ -56,7 +58,7 @@ export class LoginComponent {
         },
         error: (err) => {
           console.log(err);
-          localStorage.setItem('LoginToken', 'false');
+          /*localStorage.setItem('LoginToken', 'false');*/
           this.toast.error({
             detail: 'LỖI',
             summary: 'Có gì đó đã bị lỗi!',

@@ -16,12 +16,18 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: ()=> import('./pages/home/home.module').then((m)=> m.HomeModule),
-    /*canActivate: [AuthClassGuard]*/
+    /*canActivate: [AuthClassGuard],*/
+    data:{
+      permmitedRoles:['Admin','Student'],
+    }
   },
   {
     path:'admin',
     loadChildren:()=> import('./pages/admin/admin.module').then((m) => m.AdminModule),
-    /*canActivate: [AuthClassGuard]*/
+    /*canActivate: [AuthClassGuard],*/
+    data:{
+      permmitedRoles:['Admin'],
+    }
   }
 ];
 

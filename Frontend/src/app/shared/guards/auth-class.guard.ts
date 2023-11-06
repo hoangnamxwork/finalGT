@@ -20,8 +20,11 @@ export class AuthClassGuard implements CanActivate {
     private toast: NgToastService
   ) {}
 
-  canActivate(): boolean {
+  canActivate(
+    next: ActivatedRouteSnapshot
+  ): boolean {
     if (this.auth.isSignedin()) {
+      let roles = next.data['permittedRoles'] as Array<string>;
       return true;
     } else {
       this.toast.error({

@@ -110,8 +110,11 @@ namespace FinalGTAPI.Controllers
             var key = Encoding.ASCII.GetBytes("finalGTverysecretkey");
             var identity = new ClaimsIdentity(new Claim[]
             {
+                new Claim(ClaimTypes.Name, user.FirstName + " " + user.LastName),
+                new Claim(ClaimTypes.NameIdentifier, user.UserID.ToString()),
                 new Claim(ClaimTypes.Role, user.Role)
-            }); ;
+                
+            }); 
             var credentials = new SigningCredentials
                 (new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
             var tokenDescriptor = new SecurityTokenDescriptor

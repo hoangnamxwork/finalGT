@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using FinalGTAPI.Data;
 using FinalGTAPI.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace FinalGTAPI.Controllers
 {
@@ -20,6 +22,7 @@ namespace FinalGTAPI.Controllers
         }
 
         [HttpGet("DTO")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<Subject>>> GetQuizesDTO()
         {
             return Ok(_context.Subjects.Select(subject => _mapper.Map<SubjectDTO>(subject)));

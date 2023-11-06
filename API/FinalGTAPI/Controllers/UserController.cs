@@ -5,6 +5,8 @@ using FinalGTAPI.Data;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Infrastructure.Internal;
 using AutoMapper;
 using FinalGTAPI.DTO;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace FinalGTAPI.Controllers
 {
@@ -23,6 +25,7 @@ namespace FinalGTAPI.Controllers
 
         // GET: api/User
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             if (_context.Users == null)
@@ -34,6 +37,7 @@ namespace FinalGTAPI.Controllers
 
         // GET: api/User/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<User>> GetUserModel(int id)
         {
             if (_context.Users == null)
@@ -53,6 +57,7 @@ namespace FinalGTAPI.Controllers
         // PUT: api/User/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<List<User>>> PutUserModel(int id, User updatedUser)
         {
 
@@ -75,6 +80,7 @@ namespace FinalGTAPI.Controllers
         // POST: api/User
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<User>> PostUserModel([FromBody] User userModel)
         {
             if (_context.Users == null)
@@ -89,6 +95,7 @@ namespace FinalGTAPI.Controllers
 
         // DELETE: api/User/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUserModel(int id)
         {
             if (_context.Users == null)
@@ -118,12 +125,14 @@ namespace FinalGTAPI.Controllers
 
 
         [HttpGet("DTO")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsersDTO()
         {
             return Ok(_context.Users.Select(user => _mapper.Map<UserDTO>(user)));
         }
 
         [HttpPost("DTO")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<List<UserDTO>>> PostUserDTO(UserDTO newUser)
         {
             var user = _mapper.Map<User>(newUser);
@@ -133,6 +142,7 @@ namespace FinalGTAPI.Controllers
         }
 
         [HttpPut("DTO/{id}")]
+        [Authorize(Roles = "Admin")]
 
         public async Task<ActionResult<List<User>>> PutUserDTO(int id, UserDTO updatedUser)
         {
