@@ -1,6 +1,4 @@
-h1 {
-  color: #fcfbf4;
-}
+
 table {
   width: 100%;
 }
@@ -13,4 +11,8 @@ table {
 td,
 th {
   width: 25%;
+}
+
+.admin-title h1{
+  margin-left: 24px;
 }

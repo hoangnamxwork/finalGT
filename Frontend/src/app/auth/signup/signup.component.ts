@@ -1,9 +1,15 @@
 import { Component } from '@angular/core';
-import ValidateForm from '../validateForm';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import ValidateForm from '../../shared/archived/validateForm';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { AuthService } from '../../shared/services/auth/auth.service';
+import { WhiteSpace } from '../whitespace.validator';
 
 @Component({
   selector: 'app-signup',
@@ -13,9 +19,11 @@ import { AuthService } from '../../shared/services/auth/auth.service';
 export class SignupComponent {
   type: string = 'password';
   showPass: boolean = false;
-  eyeIcon: string = 'fa-eye-slash';
   signupForm!: FormGroup;
-
+  emailregex: RegExp =
+    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  hide = true;
+  fieldRequired: string = 'Dòng này yêu cầu nhập thông tin và không được phép có khoảng trắng';
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
@@ -23,10 +31,64 @@ export class SignupComponent {
     private toast: NgToastService
   ) {}
 
-  showPassword() {
-    this.showPass = !this.showPass;
-    this.showPass ? (this.eyeIcon = 'fa-eye') : (this.eyeIcon = 'fa-eye-slash');
-    this.showPass ? (this.type = 'text') : (this.type = 'password');
+  ngOnInit(): void {
+    this.signupForm = this.fb.group({
+      FirstName: [
+        '',
+        [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)],
+      ],
+      LastName: [
+        '',
+        [Validators.required, Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/)],
+      ],
+      Email: ['', [Validators.required, Validators.pattern(this.emailregex)]],
+      UserName: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^(\s+\S+\s*)*(?!\s).*$/),
+          WhiteSpace.noSpaceAllowed,
+        ],
+      ],
+      Password: [
+        '',
+        [Validators.required, this.checkPassword, WhiteSpace.noSpaceAllowed],
+      ],
+    });
+  }
+
+  emailErrors() {
+    return this.signupForm.get('Email')!.hasError('required')
+      ? 'Dòng này yêu cầu nhập thông tin'
+      : this.signupForm.get('Email')!.hasError('pattern')
+      ? 'Không phải là một email hợp lệ'
+      : '';
+  }
+
+  checkPassword(control: any) {
+    let enteredPassword = control.value;
+    let passwordCheck = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,})/;
+    return !passwordCheck.test(enteredPassword) && enteredPassword
+      ? { requirements: true }
+      : null;
+  }
+  getErrorPassword() {
+    return this.signupForm.get('Password')!.hasError('required')
+      ? 'Dòng này yêu cầu nhập thông tin (Mật khẩu phải chứa ít nhất sáu ký tự, một chữ cái in hoa và một số).'
+      : this.signupForm.get('Password')!.hasError('requirements')
+      ? 'Mật khẩu cần ít nhất là sáu ký tự không dấu cách, bao gồm ít nhất một chữ cái in hoa và một chữ số.'
+      : '';
+  }
+  checkValidation(input: string) {
+    const validation =
+      this.signupForm.get(input)!.invalid &&
+      (this.signupForm.get(input)!.dirty ||
+        this.signupForm.get(input)!.touched);
+    return validation;
+  }
+
+  get m() {
+    return this.signupForm.controls;
   }
 
   onSignUp() {
@@ -50,14 +112,5 @@ export class SignupComponent {
       //throw error
       ValidateForm.validateForm(this.signupForm);
     }
-  }
-  ngOnInit(): void {
-    this.signupForm = this.fb.group({
-      FirstName: ['', Validators.required],
-      LastName: ['', Validators.required],
-      Email: ['', Validators.required],
-      UserName: ['', Validators.required],
-      Password: ['', Validators.required],
-    });
   }
 }

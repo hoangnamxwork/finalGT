@@ -1,0 +1,110 @@
+<div class="background">
+    <app-nav-bar></app-nav-bar>
+    <div class="select" *ngIf="isSubjectOn">
+      <div class="row">
+        <div class="col">
+          <div class="welcome">
+            <h2>Xin chào,</h2>
+            <h1>{{ lastName }} {{ firstName }}</h1>
+            <br />
+            <p>Hãy làm bài thật tốt nhé!</p>
+          </div>
+        </div>
+        <div class="col">
+          <div class="select-title">
+            <h1>Hãy chọn môn học bạn muốn làm</h1>
+          </div>
+          <div>
+            <form [formGroup]="QuizSelect">
+              <mat-form-field>
+                <mat-label>Môn học</mat-label>
+                <mat-select formControlName="Subject">
+                  <mat-option value="1">Lịch Sử</mat-option>
+                  <mat-option value="2">Địa Lý</mat-option>
+                  <mat-option value="3">Giáo Dục Công Dân</mat-option>
+                </mat-select>
+                <mat-error *ngIf="checkValidation('Subject')">
+                  {{ fieldRequired }}
+                </mat-error>
+              </mat-form-field>
+              <div class="button">
+                <button
+                  mat-raised-button
+                  color="primary"
+                  (click)="SubjectSelect()"
+                  type="submit"
+                >
+                  Chọn
+                </button>
+                <button mat-raised-button (click)="Cancel()" type="submit">
+                  Hủy
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container quiz-container" *ngIf="isQuizOn">
+      <mat-card>
+        <div class="card-header">
+          <div>
+            <span>Câu {{ quiz.quizProgress+1 }} / 10</span>
+          </div>
+          <div>
+            <span
+              >Thời gian: {{ minutes | number : "2.0" }} : {{ seconds | number : "2.0" }}
+            </span>
+          </div>
+        </div>
+        <mat-card-content>
+          <div class="quiz-content">
+            <span>{{ quiz.qns[quiz.quizProgress].quizContent }}</span>
+          </div>
+          <mat-list>
+            <mat-list-item *ngFor="let option of quiz.qns[quiz.quizProgress].options; let i = index" (click)="selectOption(i)">
+              <span>{{i+1}}. {{ option }}</span>
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+        
+      </mat-card>
+  
+      
+  
+    </div>
+    <div class="container" *ngIf="isResultOn">
+      <div class="result-header">
+        <div>
+          <h2>Chúc mừng bạn đã hoàn thành!</h2>
+        </div>
+        <div class="result-content">
+          <h2>Bạn đã đạt được {{ quiz.correctAnswerCount }}/{{ quiz.qns.length }} câu</h2>
+        <button mat-raised-button color="primary" (click)="onSubmit()">Nộp bài</button>
+        </div>
+      </div>
+     
+      <!-- Đáp án -->
+      <mat-card *ngFor="let qn of quiz.qns; let i = index">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">{{ i + 1 }}. {{ qn.quizContent }}</span>
+          </div>
+          <div class="card-body">
+            <mat-list>
+              <mat-list-item *ngFor="let option of qn.options; let j = index">
+                <span>{{i+1}}. {{ option }}</span>
+                <span class="badge text-bg-success mx-2" *ngIf="qn.answer == j"
+                    >Đúng</span
+                  >
+                  <span class="badge text-bg-info" *ngIf="selectedOption == j"
+                    >Đã chọn</span
+                  >
+              </mat-list-item>
+            </mat-list>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+  

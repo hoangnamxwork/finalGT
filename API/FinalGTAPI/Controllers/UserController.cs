@@ -25,7 +25,7 @@ namespace FinalGTAPI.Controllers
 
         // GET: api/User
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             if (_context.Users == null)
@@ -37,8 +37,8 @@ namespace FinalGTAPI.Controllers
 
         // GET: api/User/5
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<User>> GetUserModel(int id)
+
+        public async Task<ActionResult<User>> GetUser(int id)
         {
             if (_context.Users == null)
             {
@@ -57,8 +57,8 @@ namespace FinalGTAPI.Controllers
         // PUT: api/User/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<List<User>>> PutUserModel(int id, User updatedUser)
+
+        public async Task<ActionResult<List<User>>> EditUser(int id, User updatedUser)
         {
 
             var user = await _context.Users.FindAsync(id);
@@ -80,8 +80,8 @@ namespace FinalGTAPI.Controllers
         // POST: api/User
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<User>> PostUserModel([FromBody] User userModel)
+
+        public async Task<ActionResult<User>> AddUser([FromBody] User userModel)
         {
             if (_context.Users == null)
             {
@@ -95,7 +95,7 @@ namespace FinalGTAPI.Controllers
 
         // DELETE: api/User/5
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+ 
         public async Task<IActionResult> DeleteUserModel(int id)
         {
             if (_context.Users == null)
@@ -119,42 +119,86 @@ namespace FinalGTAPI.Controllers
             return (_context.Users?.Any(e => e.UserID == id)).GetValueOrDefault();
         }
 
+        private Task<bool> CheckUsernameExistAsync(string username) =>
+            _context.Users.AnyAsync(x => x.UserName == username);
+
+
+
+        private Task<bool> CheckEmailExistAsync(string? email)
+            => _context.Users.AnyAsync(x => x.Email == email);  
 
         ///DTOs
         /// 
 
 
         [HttpGet("DTO")]
-        [Authorize(Roles = "Admin")]
+
         public async Task<ActionResult<IEnumerable<User>>> GetUsersDTO()
         {
             return Ok(_context.Users.Select(user => _mapper.Map<UserDTO>(user)));
         }
 
-        [HttpPost("DTO")]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<List<UserDTO>>> PostUserDTO(UserDTO newUser)
+        [HttpGet("DTO/{id}")]
+
+        public async Task<ActionResult<UserDTO>> GetUserDTO(int id)
         {
-            var user = _mapper.Map<User>(newUser);
-            _context.Users.Add(user);
+            if (_context.Users == null)
+            {
+                return NotFound();
+            }
+            var userModel = await _context.Users.FirstOrDefaultAsync(x => x.UserID == id);
+            var user = _mapper.Map<UserDTO>(userModel);
+            if (userModel == null)
+            {
+                return NotFound();
+            }
+
+            return user;
+        }
+
+        [HttpPost("DTO")]
+
+        public async Task<ActionResult<User>> AddUserDTO(User newUser)
+        {
+  
+            //Check Username exist
+            if (await CheckUsernameExistAsync(newUser.UserName))
+                return BadRequest(new { message = "Username already exist!" });
+
+            //Check email exist
+            if (await CheckEmailExistAsync(newUser.Email))
+                return BadRequest(new { Message = "Email Already Exist" });
+            _context.Users.Add(newUser);
             await _context.SaveChangesAsync();
-            return CreatedAtAction("GetUserModel", new { id = newUser.UserID }, newUser);
+            int addedUserId = newUser.UserID;
+            for (int i = 1; i <= 3; i++)
+            {
+                var newResult = new Result
+                {
+                    AvgScore = 0,
+                    highestScore = 0,
+                    testMade = 0,
+                    SubjectID = i,
+                    UserID = addedUserId,
+                };
+                await _context.Results.AddAsync(newResult);
+            }
+            await _context.SaveChangesAsync();
+            return Ok();
         }
 
         [HttpPut("DTO/{id}")]
-        [Authorize(Roles = "Admin")]
-
-        public async Task<ActionResult<List<User>>> PutUserDTO(int id, UserDTO updatedUser)
+        public async Task<ActionResult<List<User>>> EditUserDTO(int id, UserDTO updatedUser)
         {
             var user = await _context.Users.FindAsync(id);
-            var userDTO = _mapper.Map<User>(user);
+            //var userDTO = _mapper.Map<User>(user);
+
             user.FirstName = updatedUser.FirstName;
             user.LastName = updatedUser.LastName;
             user.Email = updatedUser.Email;
             user.UserName = updatedUser.UserName;
             user.Password = updatedUser.Password;
             user.Role = updatedUser.Role;
-
 
             await _context.SaveChangesAsync();
 

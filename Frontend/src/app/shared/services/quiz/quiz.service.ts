@@ -20,6 +20,11 @@ export class QuizService {
     return this.http.get<any>(`${this.baseUrl}RandomSubjectQuiz/${id}`);
   }
 
+  PomodoroQuiz(id:number):Observable<any>{
+    return this.http.get<any>(`${this.baseUrl}GetPomodoroQuiz/${id}`);
+  
+}
+
   SubmitTestResult(data:any):Observable<any>{
     return this.http.post<any>(`${this.baseUrl}PostTestResult`, data);
   }

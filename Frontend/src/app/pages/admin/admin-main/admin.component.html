@@ -1,0 +1,24 @@
+<div class="row">
+  <!--Navbar-->
+  <app-nav-bar></app-nav-bar>
+  <!-- Sidebar -->
+  <mat-toolbar>
+    <button mat-raised-button color="primary" routerLink="student">
+      <mat-icon>person</mat-icon>Quản lý học sinh
+    </button>
+    <button mat-raised-button color="primary" routerLink="quiz">
+      <mat-icon>question_answer</mat-icon>Quản lý câu hỏi
+    </button>
+    <button mat-raised-button color="primary" routerLink="history">
+      <mat-icon>history</mat-icon>Lịch sử làm bài
+    </button>
+    <button mat-raised-button color="primary" routerLink="subject">
+      <mat-icon>subject</mat-icon>Quản lý môn học
+    </button>
+  </mat-toolbar>
+
+  <!-- Content -->
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+</div>

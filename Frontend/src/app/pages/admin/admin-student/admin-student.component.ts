@@ -69,14 +69,13 @@ export class AdminStudentComponent {
       data
     });
     dialogRef.afterClosed().subscribe({
-      next:(res)=>{
-        if (res){
-          this.route.navigate(['admin/student']);
+      next: (res) => {
+        if (res) {
+          this.route.navigate(['admin/quiz']);
           this.student.GetAllUsers();
         }
-        
-      }
-    })
+      },
+    });
   }
   
   OpenDeleteStudent(id: number){
@@ -87,6 +86,8 @@ export class AdminStudentComponent {
           summary: 'Xóa học sinh thành công!',
           duration: 4000,
         });
+        this.route.navigate(['admin/student']);
+        this.student.GetAllUsers();
       }
     })
   }

@@ -1,0 +1,23 @@
+<div class="background">
+  <app-nav-bar></app-nav-bar>
+  <div class="content">
+    <div class="status">
+      Bạn đang {{status}}
+    </div>
+    <div class="full-timer">
+      <div class="timer-m">
+        <div class="time">{{ minutes | number : "2.0" }}</div>
+      </div>
+      <div class="timer-s">
+        <div class="time"> {{ seconds | number : "2.0" }}</div>
+      </div>
+    </div>
+    <div class="button-action">
+      <button type="button" (click)="start()">Bắt đầu</button>
+      <button type="button" (click)="stop()">Dừng lại</button>
+      <button type="button" (click)="reset()">Cài lại</button>
+      <button type="button" (click)="cancel()">Quay lại</button>
+    </div>
+
+  </div>
+</div>

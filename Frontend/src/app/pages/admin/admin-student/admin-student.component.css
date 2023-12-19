@@ -1,7 +1,3 @@
-h1 {
-  color: #fcfbf4;
-}
-
 table {
   width: 100%;
 }
@@ -13,11 +9,22 @@ table {
 
 td,
 th {
-  width: 25%;
+  width: 15%;
 }
 
-.admin-title{
+.mat-column-userID {
+  width: 3%;
+}
+
+.admin-title {
   margin-top: 2vh;
   margin-bottom: 2vh;
 }
 
+.admin-title h1 {
+  margin-left: 24px;
+}
+
+.admin-title button {
+  margin-right: 24px;
+}

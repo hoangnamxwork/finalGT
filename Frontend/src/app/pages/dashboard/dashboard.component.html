@@ -1,1 +1,114 @@
-<p>dashboard works!</p>
+<app-nav-bar></app-nav-bar>
+<div class="header d-flex justify-content-around m-4">
+  <div class="welcome justify-content-center">
+    <h2>Bảng điểm cá nhân của {{ lastName }} {{ firstName }}</h2>
+  </div>
+  <button mat-raised-button color="primary" routerLink="/home">
+    Về trang chủ
+  </button>
+</div>
+<main>
+  <div class="row">
+    <div class="col">
+      <mat-card>
+        <mat-card-header>
+          <h1>Thông tin cá nhân</h1>
+        </mat-card-header>
+        <mat-list>
+          <mat-list-item role="listitem">Họ: {{ lastName }}</mat-list-item>
+          <mat-list-item role="listitem">Tên: {{ firstName }}</mat-list-item>
+          <mat-list-item role="listitem">Email: {{ email }}</mat-list-item>
+          <mat-list-item role="listitem">Vai trò: {{ role }}</mat-list-item>
+        </mat-list>
+      </mat-card>
+    </div>
+    <div class="col">
+      <h1>Kết quả của bạn</h1>
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="ResultData">
+          <!--  -->
+          <ng-container matColumnDef="subjectID">
+            <th mat-header-cell *matHeaderCellDef>
+              Tên môn học
+            </th>
+            <td mat-cell *matCellDef="let row">
+              {{ getSubjectName(row.subjectID) }}
+            </td>
+          </ng-container>
+
+          <!--  -->
+          <ng-container matColumnDef="testMade">
+            <th mat-header-cell *matHeaderCellDef>
+              Số lần làm bài
+            </th>
+            <td mat-cell *matCellDef="let row">{{ row.testMade }}</td>
+          </ng-container>
+
+          <!--  -->
+          <ng-container matColumnDef="avgScore">
+            <th mat-header-cell *matHeaderCellDef>
+              Điểm trung bình
+            </th>
+            <td mat-cell *matCellDef="let row">{{ row.avgScore }}</td>
+          </ng-container>
+
+          <!--  -->
+          <ng-container matColumnDef="highestScore">
+            <th mat-header-cell *matHeaderCellDef>
+              Điểm cao nhất
+            </th>
+            <td mat-cell *matCellDef="let row">{{ row.highestScore }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedResultColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedResultColumns"
+          ></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <h1>Lịch sử làm bài của bạn</h1>
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+        <!-- ID Column -->
+        <ng-container matColumnDef="testID">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ID bài thi</th>
+          <td mat-cell *matCellDef="let row">{{ row.testID }}</td>
+        </ng-container>
+
+        <!--  -->
+        <ng-container matColumnDef="subjectID">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Tên môn học</th>
+          <td mat-cell *matCellDef="let row">
+            {{ getSubjectName(row.subjectID) }}
+          </td>
+        </ng-container>
+
+        <!--  -->
+        <ng-container matColumnDef="testScore">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Số điểm</th>
+          <td mat-cell *matCellDef="let row">{{ row.testScore }}</td>
+        </ng-container>
+
+        <!--  -->
+        <ng-container matColumnDef="dateTest">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Ngày làm bài
+          </th>
+          <td mat-cell *matCellDef="let row">{{ row.dateTest }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <mat-paginator
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    aria-label="Select page of users"
+  ></mat-paginator>
+    </div>
+  </div>
+</main>

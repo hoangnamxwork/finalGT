@@ -34,28 +34,64 @@ namespace FinalGTAPI.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Option1")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Option2")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Option3")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Option4")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("QuizContent")
+                        .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("QuizDiffId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("QuizDifficultyQuizDiffId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("SubjectID")
                         .HasColumnType("integer");
 
+                    b.Property<DateTime>("quizCreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("quizUpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
                     b.HasKey("QuizID");
+
+                    b.HasIndex("QuizDifficultyQuizDiffId");
 
                     b.HasIndex("SubjectID");
 
                     b.ToTable("Quiz");
+                });
+
+            modelBuilder.Entity("FinalGTAPI.Models.QuizDifficulty", b =>
+                {
+                    b.Property<int>("QuizDiffId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("QuizDiffId"));
+
+                    b.Property<string>("QuizDiff")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("QuizDiffId");
+
+                    b.ToTable("QuizDifficulties");
                 });
 
             modelBuilder.Entity("FinalGTAPI.Models.Result", b =>
@@ -69,13 +105,23 @@ namespace FinalGTAPI.Migrations
                     b.Property<double>("AvgScore")
                         .HasColumnType("double precision");
 
+                    b.Property<int>("SubjectID")
+                        .HasColumnType("integer");
+
                     b.Property<int>("UserID")
+                        .HasColumnType("integer");
+
+                    b.Property<double>("highestScore")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("testMade")
                         .HasColumnType("integer");
 
                     b.HasKey("ResultID");
 
-                    b.HasIndex("UserID")
-                        .IsUnique();
+                    b.HasIndex("SubjectID");
+
+                    b.HasIndex("UserID");
 
                     b.ToTable("Result");
                 });
@@ -88,15 +134,11 @@ namespace FinalGTAPI.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SubjectID"));
 
-                    b.Property<int?>("ResultID")
-                        .HasColumnType("integer");
-
                     b.Property<string>("SubjectName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("SubjectID");
-
-                    b.HasIndex("ResultID");
 
                     b.ToTable("Subjects");
                 });
@@ -151,6 +193,7 @@ namespace FinalGTAPI.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Role")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Token")
@@ -166,33 +209,38 @@ namespace FinalGTAPI.Migrations
 
             modelBuilder.Entity("FinalGTAPI.Models.Quiz", b =>
                 {
+                    b.HasOne("FinalGTAPI.Models.QuizDifficulty", "QuizDifficulty")
+                        .WithMany()
+                        .HasForeignKey("QuizDifficultyQuizDiffId");
+
                     b.HasOne("FinalGTAPI.Models.Subject", "Subject")
                         .WithMany("Quiz")
                         .HasForeignKey("SubjectID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("QuizDifficulty");
+
                     b.Navigation("Subject");
                 });
 
             modelBuilder.Entity("FinalGTAPI.Models.Result", b =>
                 {
-                    b.HasOne("FinalGTAPI.Models.User", "User")
-                        .WithOne("Result")
-                        .HasForeignKey("FinalGTAPI.Models.Result", "UserID")
+                    b.HasOne("FinalGTAPI.Models.Subject", "Subjects")
+                        .WithMany("Result")
+                        .HasForeignKey("SubjectID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("FinalGTAPI.Models.User", "User")
+                        .WithMany("Results")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subjects");
+
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("FinalGTAPI.Models.Subject", b =>
-                {
-                    b.HasOne("FinalGTAPI.Models.Result", "Result")
-                        .WithMany("Subjects")
-                        .HasForeignKey("ResultID");
-
-                    b.Navigation("Result");
                 });
 
             modelBuilder.Entity("FinalGTAPI.Models.TestResult", b =>
@@ -214,21 +262,18 @@ namespace FinalGTAPI.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("FinalGTAPI.Models.Result", b =>
-                {
-                    b.Navigation("Subjects");
-                });
-
             modelBuilder.Entity("FinalGTAPI.Models.Subject", b =>
                 {
                     b.Navigation("Quiz");
+
+                    b.Navigation("Result");
 
                     b.Navigation("TestResults");
                 });
 
             modelBuilder.Entity("FinalGTAPI.Models.User", b =>
                 {
-                    b.Navigation("Result");
+                    b.Navigation("Results");
 
                     b.Navigation("TestResults");
                 });

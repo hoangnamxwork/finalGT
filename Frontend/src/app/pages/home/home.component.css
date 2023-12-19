@@ -1,34 +1,50 @@
-
-
-.body {
-  margin-top: 12rem;
+.welcome{
+  margin-top: 3vh;
+  margin-bottom: 3vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
 }
 
-
-
-.title h1 {
-  font-size: 2rem;
-  color: #fcfbf4;
+h1 {
+  font-size: 6rem;
+  font-weight: 700;
+  line-height: 7rem;
+  margin:0;
+  padding: 0;
 }
 
-.selection{
-  display: flex;
-  flex-direction: row;
+h2 {
+  font-size: 4rem;
+  font-weight: 600;
+  line-height: 4rem;
+  margin: 0;
+  padding: 0;
+  margin: 2vh 0;
 }
-
-.selection button {
+/*
+button {
   padding: 20px 32px;
   font-size: 1.125rem;
   color: #fcfbf4;
   cursor: pointer;
   background: transparent;
   color: #fcfbf4;
-  background-color: #ff631a;
   margin: 0.625rem 0.625rem;
   border-radius: 8px;
   border: none;
+}
+*/
+p {
+  font-size: 1.25rem;
+  font-weight: 400;
+  display: flex;
+}
+
+.card-body{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

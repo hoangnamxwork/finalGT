@@ -17,5 +17,7 @@ namespace FinalGTAPI.Data
         public DbSet<Result> Results { get; set; }
 
         public DbSet<TestResult> TestResults { get; set; }
+
+        public DbSet<QuizDifficulty> QuizDifficulties { get; set; }
     }
 }

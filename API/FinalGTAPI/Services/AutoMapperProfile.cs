@@ -16,6 +16,8 @@ namespace FinalGTAPI.Services
             CreateMap<SubjectDTO, Subject>();
             CreateMap<TestResult,TestResultDTO>();
             CreateMap<TestResultDTO,TestResult>();
+            CreateMap<Result, ResultDTO>();
+            CreateMap<ResultDTO, ResultDTO>();
         }
     }
 }

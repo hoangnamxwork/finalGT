@@ -15,42 +15,53 @@ namespace FinalGTAPI.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly FinalGTDbContext _authContext;
+        private readonly FinalGTDbContext _context;
 
 
-        public AuthController(FinalGTDbContext authContext)
+        public AuthController(FinalGTDbContext context)
         {
-            _authContext = authContext;
+           _context = context;
 
         }
 
         [HttpPost("SignUp")]
-        public async Task<IActionResult> SignUp([FromBody] User userObj)
+        public async Task<IActionResult> SignUp([FromBody] User newUser)
         {
             
 
             //Check null
-            if (userObj == null)
+            if (newUser == null)
             {
                 return BadRequest();
             }
-
             //Check Username exist
-            if (await CheckUsernameExistAsync(userObj.UserName))
+            if (await CheckUsernameExistAsync(newUser.UserName))
                 return BadRequest(new { message = "Username already exist!" });
 
-            //Check email valid
-
             //Check email exist
-            if (await CheckEmailExistAsync(userObj.Email))
+            if (await CheckEmailExistAsync(newUser.Email))
                 return BadRequest(new { Message = "Email Already Exist" });
 
-            //Check Password
-            var pass = CheckPassword(userObj.Password);
-            if (!string.IsNullOrEmpty(pass))
-                return BadRequest(new { Message = pass.ToString() });
-            await _authContext.Users.AddAsync(userObj);
-            await _authContext.SaveChangesAsync();
+
+            await _context.Users.AddAsync(newUser);
+            await _context.SaveChangesAsync();
+
+            int addedUserId = newUser.UserID;
+            for (int i = 1; i <= 3; i++)
+            {
+                var newResult = new Result
+                {
+                    AvgScore = 0,
+                    highestScore = 0,
+                    testMade = 0,
+                    SubjectID = i,
+                    UserID = addedUserId,
+                };
+                await _context.Results.AddAsync(newResult);
+            }
+            await _context.SaveChangesAsync();
+
+            
             return Ok(new { message = "Sign Up Complete!" });
         }
 
@@ -62,7 +73,7 @@ namespace FinalGTAPI.Controllers
                 return BadRequest();
             }
 
-            var auth = await _authContext.Users.FirstOrDefaultAsync(
+            var auth = await _context.Users.FirstOrDefaultAsync(
                 x => x.UserName == accountObj.UserName && x.Password == accountObj.Password
             );
 
@@ -83,26 +94,13 @@ namespace FinalGTAPI.Controllers
         }
 
         private Task<bool> CheckUsernameExistAsync(string username) =>
-            _authContext.Users.AnyAsync(x => x.UserName == username);
+            _context.Users.AnyAsync(x => x.UserName == username);
 
      
 
         private Task<bool> CheckEmailExistAsync(string? email)
-            => _authContext.Users.AnyAsync(x => x.Email == email);
+            => _context.Users.AnyAsync(x => x.Email == email);
 
-        
-
-
-        private string CheckPassword(string password)
-        {
-            StringBuilder sb = new StringBuilder();
-            if (password.Length < 8)
-            {
-                sb.Append("Mininum password strength is 8!" + Environment.NewLine);
-            }
-
-            return sb.ToString();
-        }
 
         private string CreateJwt(User user)
         {
@@ -110,9 +108,13 @@ namespace FinalGTAPI.Controllers
             var key = Encoding.ASCII.GetBytes("finalGTverysecretkey");
             var identity = new ClaimsIdentity(new Claim[]
             {
-                new Claim(ClaimTypes.Name, user.FirstName + " " + user.LastName),
+                new Claim("FirstName", user.FirstName ),
+                new Claim("LastName", user.LastName),
                 new Claim(ClaimTypes.NameIdentifier, user.UserID.ToString()),
-                new Claim(ClaimTypes.Role, user.Role)
+                new Claim("Role", user.Role),
+                new Claim("Email", user.Email),
+                new Claim("UserName", user.UserName),
+                new Claim("Password", user.Password)
                 
             }); 
             var credentials = new SigningCredentials

@@ -17,6 +17,6 @@ namespace FinalGTAPI.DTO
 
         public string? Password { get; set; }
 
-        public string? Role { get; set; } = "Student";
+        public string Role { get; set; } = "Student";
     }
 }

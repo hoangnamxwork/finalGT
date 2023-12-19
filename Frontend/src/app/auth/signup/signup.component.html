@@ -1,135 +1,117 @@
-<div class="background">
+<app-nav-bar></app-nav-bar>
+<div class="container">
+  <div class="content">
+    <mat-toolbar class="content-title" color="primary"> Đăng ký </mat-toolbar>
+    <mat-card>
+      <form [formGroup]="signupForm">
+        <div class="row">
+          <div class="col">
+            <mat-form-field appearance="fill">
+              <mat-label>Tên</mat-label>
+              <input
+                matInput
+                placeholder="Tên"
+                formControlName="FirstName"
+                type="text"
+              />
 
-  <div class="body">
-    <div class="container">
-      <div class="row">
-        <div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3">
-          <div class="panel border bg-white">
-            <div class="panel-heading">
-              <h3 class="pt-3 font-weight-bold">Đăng ký</h3>
-            </div>
-            <div class="panel-body p-3">
-              <form [formGroup]="signupForm">
-                <!--Fullname-->
-                <div class="form-group pt-3">
-                  <label class="form-text"
-                    >Tên đầy đủ<span class="mandatory"> *</span></label
-                  >
-                  <div
-                    class="input-field"
-                    [class.error]="
-                      signupForm.controls['FullName'].dirty &&
-                      signupForm.hasError('required', 'FullName')
-                    "
-                  >
-                    <span class="fas fa-address-card p-2"></span>
-                    <input formControlName="FullName" type="text" />
-                  </div>
-                </div>
-                <small
-                  *ngIf="
-                    signupForm.controls['FullName'].dirty &&
-                    signupForm.hasError('required', 'FullName')
-                  "
-                  class="text-danger"
-                  >Bạn cần nhập tên đầy đủ của mình!</small
-                >
-                <!--Username-->
-                <div class="form-group pt-3">
-                  <label class="form-text"
-                    >Tên đăng nhập<span class="mandatory"> *</span></label
-                  >
-                  <div
-                    class="input-field"
-                    [class.error]="
-                      signupForm.controls['UserName'].dirty &&
-                      signupForm.hasError('required', 'UserName')
-                    "
-                  >
-                    <span class="fas fa-user p-2"></span>
-                    <input type="text" formControlName="UserName" />
-                  </div>
-                </div>
-                <small
-                  *ngIf="
-                    signupForm.controls['UserName'].dirty &&
-                    signupForm.hasError('required', 'UserName')
-                  "
-                  class="text-danger"
-                  >Bạn cần điền tên đăng nhập!</small
-                >
-                <!--Password-->
-                <div class="form-group pt-3">
-                  <label class="form-text"
-                    >Mật khẩu<span class="mandatory"> *</span></label
-                  >
-                  <div
-                    class="input-field"
-                    [class.error]="
-                      signupForm.controls['Password'].dirty &&
-                      signupForm.hasError('required', 'Password')
-                    "
-                  >
-                    <span class="fas fa-lock p-2"></span>
-                    <input [type]="type" formControlName="Password" />
-                    <span
-                      (click)="showPassword()"
-                      class="fa {{ eyeIcon }}"
-                    ></span>
-                  </div>
-                  <span class="form-text"
-                    >Nhắc nhở: Không bao giờ chia sẻ Mật khẩu của bạn với bất kỳ ai.</span
-                  >
-                </div>
-                <small
-                  *ngIf="
-                    signupForm.controls['Password'].dirty &&
-                    signupForm.hasError('required', 'Password')
-                  "
-                  class="text-danger"
-                  >Bạn cần điền mật khẩu!</small
-                >
-                <!--Phone Number-->
-                <div class="form-group pt-3">
-                  <label class="form-text"
-                    >Số điện thoại<span class="mandatory"> *</span></label
-                  >
-                  <div
-                    class="input-field"
-                    [class.error]="
-                      signupForm.controls['PhoneNumber'].dirty &&
-                      signupForm.hasError('required', 'PhoneNumber')
-                    "
-                  >
-                    <span class="fas fa-phone-square-alt p-2"></span>
-                    <input type="text" formControlName="PhoneNumber" />
-                  </div>
-                </div>
-                <small
-                  *ngIf="
-                    signupForm.controls['PhoneNumber'].dirty &&
-                    signupForm.hasError('required', 'PhoneNumber')
-                  "
-                  class="text-danger"
-                  >Bạn cần điền số điện thoại</small
-                >
+              <mat-error *ngIf="checkValidation('FirstName')">
+                {{ fieldRequired }}
+              </mat-error>
 
-                <button
-                  (click)="onSignUp()"
-                  type="submit"
-                  class="btn btn-primary btn-block mt-4 w-100"
-                >
-                  Đăng ký!
-                </button>
-                <div class="text-center pt-4 text-muted">
-                  Bạn đã có tài khoản? 
-                  <a id="signinnow" routerLink="/login">Đăng nhập ngay!</a>
-                </div>
-              </form>
-            </div>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="fill">
+              <mat-label>Họ</mat-label>
+              <input
+                matInput
+                placeholder="Họ"
+                formControlName="LastName"
+                type="text"
+              />
+              <mat-error *ngIf="checkValidation('LastName')">
+                {{ fieldRequired }}
+              </mat-error>
+            </mat-form-field>
           </div>
         </div>
-      </div>
-    </div>
+        <mat-form-field appearance="fill">
+          <mat-icon matPrefix>person_outline</mat-icon>
+          <mat-label>Tên đăng nhập</mat-label>
+          <input
+            matInput
+            placeholder="Tên đăng nhập"
+            formControlName="UserName"
+            type="text"
+          />
+          <mat-error *ngIf="checkValidation('UserName')">
+            {{ fieldRequired }}
+          </mat-error>
+          <mat-error *ngIf="m.UserName.errors?.noSpaceAllowed">
+            {{fieldRequired}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-icon matPrefix>lock_outline</mat-icon>
+          <mat-label>Mật khẩu</mat-label>
+          <input
+            formControlName="Password"
+            matInput
+            [type]="hide ? 'password' : 'text'"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+          <mat-hint
+            ><span
+              >Mật khẩu cần ít nhất là sáu ký tự, bao gồm ít nhất một chữ cái in
+              hoa và một chữ số.</span
+            >
+          </mat-hint>
+          <mat-error *ngIf="checkValidation('Password')">
+            {{ getErrorPassword() }}
+          </mat-error>
+          <mat-error *ngIf="m.Password.errors?.noSpaceAllowed">
+            {{fieldRequired}}
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-icon matPrefix>mail</mat-icon>
+          <mat-label>Email</mat-label>
+          <input
+            type="email"
+            matInput
+            placeholder="Email *"
+            formControlName="Email"
+          />
+          <mat-error *ngIf="checkValidation('Email')">
+            {{ emailErrors() }}
+          </mat-error>
+        </mat-form-field>
+        <div class="footer">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="onSignUp()"
+            type="submit"
+          >
+            Đăng ký
+          </button>
+          <span
+            >Đã có tài khoản?
+            <a id="signinnow" routerLink="/login" color="primary">
+              Đăng nhập ngay!</a
+            ></span
+          >
+        </div>
+      </form>
+    </mat-card>
   </div>
 </div>

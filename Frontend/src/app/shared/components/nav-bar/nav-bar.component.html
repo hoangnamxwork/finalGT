@@ -1,9 +1,16 @@
-<div class="header">
-    <div class="logo">
-      <a id="logo" routerLink="/welcome">ProPrep.vn</a>
-    </div>
-
-    <div class="logout">
-      <button id="logout" (click)="onLogOut()">Đăng xuất</button>
-    </div>
+<mat-toolbar color="primary">
+  <a id="logo" routerLink="/welcome">ProPrep.vn</a>
+  <span class="spacer"></span>
+  <div *ngIf="!auth.isSignedin()">
+    <button mat-raised-button color="primary" routerLink="/login">
+      Đăng nhập
+    </button>
+    <button mat-raised-button routerLink="/signup">Đăng ký</button>
   </div>
+  <div class="logout" *ngIf="auth.isSignedin()">
+    <button mat-raised-button  [routerLink]="['/user', nameid]">Thay đổi thông tin cá nhân</button>
+    <button mat-raised-button color="warn" (click)="onLogOut()">
+      Đăng xuất
+    </button>
+  </div>
+</mat-toolbar>

@@ -16,7 +16,7 @@ export class AdminStudentService {
   }
 
   GetUser(id:string): Observable<User>{
-    return this.http.get<User>(`${this.baseUrl}${id}`);
+    return this.http.get<User>(`${this.baseUrl}DTO/${id}`);
   }
 
   AddUser(user: User): Observable<any>{

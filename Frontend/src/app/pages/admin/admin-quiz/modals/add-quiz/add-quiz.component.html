@@ -1,63 +1,79 @@
-<div mat-dialog-title>
+<div class="row" mat-dialog-title>
   <h1>Thêm câu hỏi</h1>
 </div>
 <form [formGroup]="addQuizForm" (ngSubmit)="onAddQuizSubmit()">
-  <div mat-dialog-content class="content">
-    <div class="row">
-      <mat-form-field appearance="outline">
-        <mat-label>Câu hỏi</mat-label>
-        <input matInput type="text" formControlName="quizContent" />
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>ID Môn học</mat-label>
-        <input matInput type="number" formControlName="subjectID" min="0" max="8" />
-      </mat-form-field>
-    </div>
-  </div>
   <div class="row">
-    <div class="col">
-      <mat-form-field appearance="outline">
-        <mat-label>Lựa chọn 1</mat-label>
-        <input matInput type="text" formControlName="option1" />
-      </mat-form-field>
-    </div>
-    <div class="col">
-      <mat-form-field appearance="outline">
-        <mat-label>Lựa chọn 2</mat-label>
-        <input matInput type="text" formControlName="option2" />
-      </mat-form-field>
-    </div>
+    <mat-form-field appearance="outline">
+      <mat-label>Câu hỏi</mat-label>
+      <input matInput type="text" formControlName="quizContent" />
+    </mat-form-field>
   </div>
+
   <div class="row">
-    <div class="col">
-      <mat-form-field appearance="outline">
-        <mat-label>Lựa chọn 3</mat-label>
-        <input matInput type="text" formControlName="option3" />
-      </mat-form-field>
-    </div>
-    <div class="col">
-      <mat-form-field appearance="outline">
-        <mat-label>Lựa chọn 4</mat-label>
-        <input matInput type="text" formControlName="option4" />
-      </mat-form-field>
-    </div>
+    <mat-form-field appearance="outline">
+      <mat-label>Môn học</mat-label>
+      <mat-select formControlName="subjectID">
+        <mat-option value="1">Lịch sử</mat-option>
+        <mat-option value="2">Địa lý</mat-option>
+        <mat-option value="3">GDCD</mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
   <div class="row">
     <mat-form-field appearance="outline">
-        <mat-label>Đáp án</mat-label>
-        <input matInput type="number" formControlName="answer" min="0" max="3"/>
-      </mat-form-field>
+      <mat-label>Mức độ khó</mat-label>
+      <mat-select formControlName="quizDiffId">
+        <mat-option value="1">Nhận biết</mat-option>
+        <mat-option value="2">Thông hiểu</mat-option>
+        <mat-option value="3">Vận dụng thấp</mat-option>
+        <mat-option value="4">Vận dụng cao</mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
+
+  <div class="row">
+    <mat-form-field appearance="outline">
+      <mat-label>Lựa chọn 1</mat-label>
+      <input matInput type="text" formControlName="option1" />
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <mat-form-field appearance="outline">
+      <mat-label>Lựa chọn 2</mat-label>
+      <input matInput type="text" formControlName="option2" />
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <mat-form-field appearance="outline">
+      <mat-label>Lựa chọn 3</mat-label>
+      <input matInput type="text" formControlName="option3" />
+    </mat-form-field>
+  </div>
+  <div class="row">
+    <mat-form-field appearance="outline">
+      <mat-label>Lựa chọn 4</mat-label>
+      <input matInput type="text" formControlName="option4" />
+    </mat-form-field>
+  </div>
+
+  <div class="row">
+    <mat-form-field appearance="outline">
+      <mat-label>Đáp án</mat-label>
+      <mat-select formControlName="answer">
+        <mat-option value="0">Lựa chọn 1</mat-option>
+        <mat-option value="1">Lựa chọn 2</mat-option>
+        <mat-option value="2">Lựa chọn 3</mat-option>
+        <mat-option value="3">Lựa chọn 4</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+<div class="row">
   <div mat-dialog-actions class="action">
     <button mat-raised-button type="button" [mat-dialog-close]="false">
       Cancel
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      type="submit"
-    >
-      Thêm
-    </button>
+    <button mat-raised-button color="primary" type="submit">Thêm</button>
   </div>
+</div>
+  
 </form>

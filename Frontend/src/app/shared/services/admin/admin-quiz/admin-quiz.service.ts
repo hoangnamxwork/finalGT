@@ -15,10 +15,10 @@ export class AdminQuizService {
   }
 
   AddQuiz(data: any): Observable<any>{
-    return this.http.post(`${this.baseUrl}DTO`, data);
+    return this.http.post<any>(`${this.baseUrl}DTO`, data);
   }
 
-  EditQuiz(id:string, data:any){
+  EditQuiz(id:number, data:any){
     return this.http.put(`${this.baseUrl}DTO/${id}`, data);
   }
   

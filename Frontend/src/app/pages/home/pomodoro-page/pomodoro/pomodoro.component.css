@@ -1,0 +1,48 @@
+.content{
+  margin-top: 20vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.status {
+  margin-bottom: 12vh;
+  font-size: 2vh;
+}
+
+.full-timer{
+  display: flex;
+  flex-direction: row;
+ 
+}
+
+.time {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  font-size: 15rem;
+}
+
+.button-action{
+  margin-top: 20vh;
+}
+
+.button-action button {
+   
+    font-size: 2rem;
+    padding: 32px 48px;
+    margin: 0 10px;
+    border-radius: 10px;
+    border: none;
+    outline: inherit;
+    color: #fcfbf4;
+    background: #ff631a;
+
+  }
+
+  .button-action button:hover {
+    opacity: 80%;
+    transition: 0.5s;
+    cursor: pointer;
+  }
+

@@ -7,6 +7,6 @@ namespace FinalGTAPI.DTOs
         [Key]
         public int SubjectID { get; set; }
 
-        public string? SubjectName { get; set; }
+        public string SubjectName { get; set; }
     }
 }

@@ -1,0 +1,30 @@
+table {
+  width: 100%;
+}
+
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td,
+th {
+  width: 10%;
+}
+
+.mat-column-quizID {
+  width: 3%;
+}
+
+.mat-column-subjectID {
+  width: 3%;
+}
+
+.admin-title {
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+}
+
+.admin-title h1 {
+  margin-left: 24px;
+}

@@ -9,12 +9,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgToastModule } from 'ng-angular-popup';
 import { HomeModule } from './pages/home/home.module';
 import { CommonModule } from '@angular/common';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
-import { AuthClassGuard } from './shared/guards/auth-class.guard';
-import { UserInfoComponent } from './pages/user-info/user-info.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { NgChartsModule } from 'ng2-charts';
+
 
 @NgModule({
-  declarations: [AppComponent, UserInfoComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     NgbModule,
@@ -27,9 +27,11 @@ import { UserInfoComponent } from './pages/user-info/user-info.component';
     HomeModule,
     CommonModule,
     BrowserAnimationsModule,
+    NgChartsModule,
+    
     
   ],
-  providers: [AuthClassGuard],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

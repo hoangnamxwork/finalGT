@@ -4,34 +4,50 @@
 <form [formGroup]="addUserForm" (ngSubmit)="onAddStudentSubmit()">
   <div mat-dialog-content class="content">
     <div class="row">
-      <div class="col">
-        <mat-form-field appearance="outline">
-          <mat-label>Tên</mat-label>
-          <input matInput type="text" formControlName="firstName" />
-        </mat-form-field>
-      </div>
-
-      <div class="col">
-        <mat-form-field appearance="outline">
-          <mat-label>Họ</mat-label>
-          <input matInput type="text" formControlName="lastName" />
-        </mat-form-field>
-      </div>
+      <mat-form-field appearance="outline">
+        <mat-label>Tên</mat-label>
+        <input matInput type="text" formControlName="firstName" />
+        <mat-error *ngIf="checkValidation('firstName')">
+          {{ fieldRequired }}
+        </mat-error>
+      </mat-form-field>
     </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Họ</mat-label>
+        <input matInput type="text" formControlName="lastName" />
+        <mat-error *ngIf="checkValidation('lastName')">
+          {{ fieldRequired }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+
     <div class="row">
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
         <input matInput type="text" formControlName="email" />
+        <mat-error *ngIf="checkValidation('email')">
+          {{ emailErrors() }}
+        </mat-error>
       </mat-form-field>
     </div>
     <div class="row">
       <mat-form-field appearance="outline">
         <mat-label>Tên đăng nhập</mat-label>
         <input matInput type="text" formControlName="userName" />
+        <mat-error *ngIf="checkValidation('userName')">
+          {{ fieldRequired }}
+        </mat-error>
       </mat-form-field>
+    </div>
+    <div class="row">
       <mat-form-field appearance="outline">
         <mat-label>Mật khẩu</mat-label>
         <input matInput type="text" formControlName="password" />
+        <mat-error *ngIf="checkValidation('password')">
+          {{ getErrorPassword() }}
+        </mat-error>
       </mat-form-field>
     </div>
     <div class="row">

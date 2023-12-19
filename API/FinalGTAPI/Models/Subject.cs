@@ -9,7 +9,7 @@ namespace FinalGTAPI.Models
         [Key]
         public int SubjectID { get; set; }
 
-        public string? SubjectName { get; set; }
+        public string SubjectName { get; set; }
 
         [JsonIgnore]
         public List<Quiz>? Quiz { get; set; }
@@ -17,10 +17,8 @@ namespace FinalGTAPI.Models
         [JsonIgnore]
         public List<TestResult>? TestResults { get; set; }
 
-        public int? ResultID { get; set; }
-
         [JsonIgnore]
-        public Result? Result { get; set; }
+        public List<Result>? Result { get; set; }
 
     }
 }

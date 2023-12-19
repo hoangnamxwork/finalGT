@@ -1,0 +1,17 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+mat-toolbar{
+  justify-content: space-around;
+}
+/*
+mat-sidenav-container{
+  height: 100%;
+}
+
+mat-list-item{
+  width: 100%;
+}*/
+

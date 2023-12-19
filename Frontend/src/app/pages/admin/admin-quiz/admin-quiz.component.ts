@@ -16,16 +16,22 @@ import { Router } from '@angular/router';
 })
 export class AdminQuizComponent {
   public quizes: any = [];
+  public quizDiffName: string[] = ['Nhận biết', 'Thông hiểu', 'Vận dụng thấp','Vận dụng cao'];
+  public subjectName: string[] = ['Lịch Sử','Địa Lý','Giáo Dục Công Dân'];
+  public answer: string[] = ['Lựa chọn 1','Lựa chọn 2','Lựa chọn 3','Lựa chọn 4'];
   displayedColumns: string[] = [
     'quizID',
     'subjectID',
+    'quizDiffId',
     'quizContent',
     'option1',
     'option2',
     'option3',
     'option4',
     'answer',
-    'action'
+    'quizCreatedAt',
+    'quizUpdatedAt',
+    'action',
   ];
   dataSource!: MatTableDataSource<any>;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -44,28 +50,40 @@ export class AdminQuizComponent {
     });
   }
 
+  getQuizDiffName(diffID:number): string{
+    return this.quizDiffName[diffID-1];
+  }
+
+  getSubjectName(subjectID:number): string{
+    return this.subjectName[subjectID-1];
+  }
+
+  getAnswerName(answerID:number):string{
+    return this.answer[answerID-1];
+  }
+
   OpenAddQuiz() {
     const dialogRef = this.dialog.open(AddQuizComponent);
     dialogRef.afterClosed().subscribe({
-      next:(res)=>{
+      next: (res) => {
         this.route.navigate(['admin/quiz']);
         this.quiz.GetAllQuizes();
-      }
-    })
+      },
+    });
   }
 
-  OpenEditQuiz(data:any) {
+  OpenEditQuiz(data: any) {
     const dialogRef = this.dialog.open(EditQuizComponent, {
-      data
+      data,
     });
     dialogRef.afterClosed().subscribe({
-      next:(res)=>{
-        if (res){
+      next: (res) => {
+        if (res) {
           this.route.navigate(['admin/quiz']);
           this.quiz.GetAllQuizes();
         }
-      }
-    })
+      },
+    });
   }
 
   OpenDeleteQuiz(id: number) {
@@ -76,8 +94,10 @@ export class AdminQuizComponent {
           summary: 'Xóa câu hỏi thành công!',
           duration: 4000,
         });
-      }
-    })
+        this.route.navigate(['admin/quiz']);
+        this.quiz.GetAllQuizes();
+      },
+    });
   }
 
   applyFilter(event: Event) {

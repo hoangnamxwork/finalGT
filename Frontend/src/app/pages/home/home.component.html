@@ -1,20 +1,47 @@
-<div class="background">
-    <app-nav-bar></app-nav-bar>
-    <div class="body">
-      <div class="title"><h1>Bạn muốn làm gì?</h1></div>
-      <div class="selection">
-        <div class="test">
-          <button routerLink="quiz">quiz</button>
-        </div>
-        <div class="pomodoro">
-          <button routerLink="pomodoro">pomodoro</button>
-        </div>
-        <div class="dashboard">
-          <button routerLink="dashboard">dashboard</button>
-        </div>
+<app-nav-bar></app-nav-bar>
+
+<div class="row">
+  <div class="welcome">
+    <h2>
+      Xin chào,
+
+    </h2>
+    <h1>
+      {{lastName}} {{firstName}}
+    </h1>
+    <br>
+    <p>
+      Hôm nay bạn muốn làm gì?
+    </p>
+  </div>
+  <div class="col-md-4">
+    
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Làm đề thi</h5>
+        <p class="card-text">Chọn môn học bạn muốn và làm đề thi thôi nào</p>
+        <button mat-raised-button color="primary" routerLink="quiz">Làm đề thi</button>
       </div>
     </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Tự học pomodoro</h5>
+        <p class="card-text">Cùng làm để thi hoặc ngồi học cùng ProPrep nào!</p>
+        <button mat-raised-button color="primary" (click)="OpenSelectPomodoro()">Pomodoro</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Bảng điểm cá nhân</h5>
+        <p class="card-text">Hãy xem bạn đã tự luyện như nào.</p>
+        <button mat-raised-button color="primary" routerLink="dashboard">Bảng điểm cá nhân</button>
+      </div>
+    </div>
+  </div>
 </div>
-
-
-

@@ -1,0 +1,61 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Admin\\project1\\API\\FinalGTAPI\\wwwroot\\quiz\\img\\638365060590462148.png",
+      "PackagePath": "staticwebassets\\quiz\\img\\638365060590462148.png"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\project1\\API\\FinalGTAPI\\wwwroot\\quiz\\img\\638367125517095869.png",
+      "PackagePath": "staticwebassets\\quiz\\img\\638367125517095869.png"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\project1\\API\\FinalGTAPI\\wwwroot\\quiz\\img\\638367582092915261.jpg",
+      "PackagePath": "staticwebassets\\quiz\\img\\638367582092915261.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\project1\\API\\FinalGTAPI\\wwwroot\\quiz\\img\\638368454929886572.png",
+      "PackagePath": "staticwebassets\\quiz\\img\\638368454929886572.png"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\project1\\API\\FinalGTAPI\\wwwroot\\quiz\\img\\638368475773692140.png",
+      "PackagePath": "staticwebassets\\quiz\\img\\638368475773692140.png"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\project1\\API\\FinalGTAPI\\wwwroot\\quiz\\img\\638368478928011656.png",
+      "PackagePath": "staticwebassets\\quiz\\img\\638368478928011656.png"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\project1\\API\\FinalGTAPI\\wwwroot\\quiz\\img\\638368479866724367.png",
+      "PackagePath": "staticwebassets\\quiz\\img\\638368479866724367.png"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\project1\\API\\FinalGTAPI\\wwwroot\\quiz\\img\\erd2.drawio (2).png",
+      "PackagePath": "staticwebassets\\quiz\\img\\erd2.drawio (2).png"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\project1\\API\\FinalGTAPI\\wwwroot\\quiz\\img\\marek-piwnicki-IbFSwPBGyVo-unsplash.jpg",
+      "PackagePath": "staticwebassets\\quiz\\img\\marek-piwnicki-IbFSwPBGyVo-unsplash.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Admin\\project1\\API\\FinalGTAPI\\wwwroot\\quiz\\img\\studentList-sequence.drawio (4).png",
+      "PackagePath": "staticwebassets\\quiz\\img\\studentList-sequence.drawio (4).png"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.FinalGTAPI.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.FinalGTAPI.props",
+      "PackagePath": "build\\FinalGTAPI.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.FinalGTAPI.props",
+      "PackagePath": "buildMultiTargeting\\FinalGTAPI.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildTransitive.FinalGTAPI.props",
+      "PackagePath": "buildTransitive\\FinalGTAPI.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

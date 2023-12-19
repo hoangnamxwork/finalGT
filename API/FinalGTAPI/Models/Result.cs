@@ -12,11 +12,18 @@ namespace FinalGTAPI.Models
 
         public double AvgScore { get; set; } = 0;
 
+        public double highestScore { get; set; } = 0;
+
+        public int testMade { get; set; } = 0;
+
         public int UserID { get; set; }
 
         [JsonIgnore]
         public User? User { get; set; }
-    
-        public List<Subject>? Subjects { get; set; }
+
+        public int SubjectID { get; set; }
+
+        [JsonIgnore]
+        public Subject? Subjects { get; set; }
     }
 }

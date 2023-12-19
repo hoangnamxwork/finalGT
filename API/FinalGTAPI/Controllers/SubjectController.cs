@@ -22,8 +22,7 @@ namespace FinalGTAPI.Controllers
         }
 
         [HttpGet("DTO")]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<IEnumerable<Subject>>> GetQuizesDTO()
+        public async Task<ActionResult<IEnumerable<Subject>>> GetQuizDTO()
         {
             return Ok(_context.Subjects.Select(subject => _mapper.Map<SubjectDTO>(subject)));
         }

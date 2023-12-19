@@ -1,72 +1,54 @@
-<div class="background">
-  <div class="body">
-    <div class="login">
-      <div class="heading">
-        <h1>Đăng nhập</h1>
-      </div>
-      <div class="form">
-        <form [formGroup]="signinForm">
-          <div class="form-group">
-            <label class="form-text"
-              >Tên đăng nhập<span class="mandatory"> *</span></label
-            >
-            <div
-              class="input-field"
-              [class.error]="
-                signinForm.controls['UserName'].dirty &&
-                signinForm.hasError('required', 'UserName')
-              "
-            >
-              <span class="fa-solid fa-user p-2"></span>
-              <input formControlName="UserName" type="text" />
-            </div>
-          </div>
-          <small
-            *ngIf="
-              signinForm.controls['UserName'].dirty &&
-              signinForm.hasError('required', 'UserName')
-            "
-            class="text-danger"
-            >Cần tên đăng nhập của bạn!</small
-          >
-          <div class="form-group">
-            <label class="form-text"
-              >Password<span class="mandatory"> *</span></label
-            >
-            <div
-              class="input-field"
-              [class.error]="
-                signinForm.controls['Password'].dirty &&
-                signinForm.hasError('required', 'Password')
-              "
-            >
-              <span class="fas fa-lock p-2"></span>
-              <input formControlName="Password" [type]="type" />
-              <span (click)="showPassword()" class="fas {{ eyeIcon }}"></span>
-            </div>
-          </div>
-          <small
-            *ngIf="
-              signinForm.controls['Password'].dirty &&
-              signinForm.hasError('required', 'Password')
-            "
-            class="text-danger"
-            >Cần mật khẩu của bạn!</small
-          >
-          <div>
+<app-nav-bar> </app-nav-bar>
+<div class="container">
+  <div class="content">
+    <mat-toolbar class="content-title" color="primary"> Đăng nhập </mat-toolbar>
+    <mat-card>
+      <form [formGroup]="signinForm">
+        <mat-form-field appearance="fill">
+          <mat-icon matPrefix>person_outline</mat-icon>
+          <mat-label>Tên đăng nhập</mat-label>
+          <input
+            matInput
+            placeholder="Tên đăng nhập"
+            formControlName="userName"
+            type="text"
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-icon matPrefix>lock_outline</mat-icon>
+          <mat-label>Mật khẩu</mat-label>
+          <input
+            formControlName="password"
+            matInput
+            [type]="hide ? 'password' : 'text'"
+          />
           <button
+            mat-icon-button
+            matSuffix
+            (click)="hide = !hide"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide"
+          >
+            <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
+        </mat-form-field>
+        <div class="footer">
+          <button
+            mat-raised-button
+            color="primary"
             (click)="onSignIn()"
             type="submit"
-            class="login-button"
           >
             Đăng nhập
           </button>
+          <span
+            >Không có tài khoản?
+            <a id="signupnow" routerLink="/signup" color="primary">
+              Đăng ký ngay!</a
+            ></span
+          >
         </div>
-          <div>
-            Không có tài khoản?
-            <a id="signupnow" routerLink="/signup"> Đăng ký ngay!</a>
-          </div>
-        </form>
-      </div>
-    </div>
+      </form>
+    </mat-card>
+  </div>
 </div>

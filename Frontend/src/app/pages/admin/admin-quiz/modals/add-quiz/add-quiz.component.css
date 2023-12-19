@@ -1,16 +1,22 @@
-.content {
-  padding-top: 10px;
+
+
+form {
+  width: 1000px;
+  height: 100%;
 }
+
 .row {
   display: flex;
-  gap: 4px;
+  justify-content: center;
+  gap: 2px;
 }
 .row mat-form-field {
-  width: 100%;
+  width: 80%;
+  padding: 0;
 }
 
 .action {
-  padding: 0px 25px 20px;
+  width: 80%;
 }
 .action button {
   flex: 1;

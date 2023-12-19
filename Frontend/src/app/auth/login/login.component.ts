@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
-import ValidateForm from '../validateForm';
+import ValidateForm from '../../shared/archived/validateForm';
 import { Router } from '@angular/router';
 import { AuthService } from '../../shared/services/auth/auth.service';
 import { UserDataService } from 'src/app/shared/services/user-data/user-data.service';
@@ -17,7 +17,7 @@ export class LoginComponent {
   type: string = 'password';
   eyeIcon: string = 'fa-eye-slash';
   role: string = '';
-
+  hide = true;
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
@@ -28,19 +28,16 @@ export class LoginComponent {
 
   onSignIn() {
     if (this.signinForm.valid) {
-      //Send the object to database
       this.auth.SignIn(this.signinForm.value).subscribe({
         next: (res) => {
-          /*localStorage.setItem('LoginToken', 'true');*/
           this.auth.storeAuthToken(res.token);
-          let tokenPayLoad = this.auth.decodedToken();     
+          let tokenPayLoad = this.auth.decodedToken(); 
           this.userData.setFullName(tokenPayLoad.unique_name);
           this.userData.setUserID(tokenPayLoad.nameid);
-          this.userData.setRole(tokenPayLoad.role);
+          this.userData.setRole(tokenPayLoad.Role);
           this.userData.getRole().subscribe((val) => {
             const rolefromToken = this.auth.getRoleFromToken();
             this.role = val || rolefromToken;
-            console.log(this.role);
           });
           if (this.role) {
             if (this.role === 'Student') {
@@ -58,7 +55,6 @@ export class LoginComponent {
         },
         error: (err) => {
           console.log(err);
-          /*localStorage.setItem('LoginToken', 'false');*/
           this.toast.error({
             detail: 'LỖI',
             summary: 'Có gì đó đã bị lỗi!',
@@ -80,8 +76,8 @@ export class LoginComponent {
 
   ngOnInit(): void {
     this.signinForm = this.fb.group({
-      UserName: ['', Validators.required],
-      Password: ['', Validators.required],
+      userName: ['', Validators.required],
+      password: ['', Validators.required],
     });
   }
 }

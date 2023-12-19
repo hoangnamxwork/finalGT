@@ -1,0 +1,114 @@
+<app-nav-bar>
+    
+</app-nav-bar>
+<div class="container">
+    <div class="content">
+      <mat-toolbar class="content-title" color="primary">Sửa thông tin </mat-toolbar>
+      <mat-card>
+        <form [formGroup]="editUserForm">
+          <div class="row">
+            <div class="col">
+              <mat-form-field appearance="fill">
+                <mat-label>Tên</mat-label>
+                <input
+                  matInput
+                  placeholder="Tên"
+                  formControlName="firstName"
+                  type="text"
+                />
+                <mat-error *ngIf="checkValidation('firstName')">
+                  {{ fieldRequired }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col">
+              <mat-form-field appearance="fill">
+                <mat-label>Họ</mat-label>
+                <input
+                  matInput
+                  placeholder="Họ"
+                  formControlName="lastName"
+                  type="text"
+                />
+                <mat-error *ngIf="checkValidation('lastName')">
+                  {{ fieldRequired }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <mat-form-field appearance="fill">
+            <mat-icon matPrefix>person_outline</mat-icon>
+            <mat-label>Tên đăng nhập</mat-label>
+            <input
+              matInput
+              placeholder="Tên đăng nhập"
+              formControlName="userName"
+              type="text"
+            />
+            <mat-error *ngIf="checkValidation('userName')">
+              {{ fieldRequired }}
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-icon matPrefix>lock_outline</mat-icon>
+            <mat-label>Mật khẩu</mat-label>
+            <input
+              formControlName="password"
+              matInput
+              [type]="hide ? 'password' : 'text'"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="hide = !hide"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide"
+            >
+              <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+            </button>
+            <mat-hint
+            ><span
+              >Mật khẩu cần ít nhất là sáu ký tự, bao gồm ít nhất một chữ cái in
+              hoa và một chữ số.</span
+            >
+          </mat-hint>
+          <mat-error *ngIf="checkValidation('password')">
+            {{ getErrorPassword() }}
+          </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill">
+            <mat-icon matPrefix>mail</mat-icon>
+            <mat-label>Email</mat-label>
+            <input
+              type="email"
+              matInput
+              placeholder="Email *"
+              formControlName="email"
+            />
+            <mat-error *ngIf="checkValidation('email')">
+              {{ emailErrors() }}
+            </mat-error>
+          </mat-form-field>
+          <div class="footer">
+            <button
+              mat-raised-button
+              
+              (click)="Cancel()"
+              type="submit"
+            >
+              Hủy
+            </button>
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="OnEditUser()"
+              type="submit"
+            >
+              Sửa thông tin
+            </button>
+
+          </div>
+        </form>
+      </mat-card>
+    </div>
+  </div>

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
-import { UserDataService } from '../../services/user-data/user-data.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -8,16 +7,16 @@ import { UserDataService } from '../../services/user-data/user-data.service';
   styleUrls: ['./nav-bar.component.css'],
 })
 export class NavBarComponent {
-  public fullName: string = '';
-  public isLoggedIn: boolean = false;
-
-  constructor(private auth: AuthService, private userData: UserDataService) {}
-  ngOnInit() {
-
+  public fullName = '';
+  public nameid = '';
+  constructor(public auth: AuthService) {
+    if (this.auth.isSignedin()) {
+      this.nameid = this.auth.getUserIDfromToken();
+    }
   }
 
   onLogOut() {
-
+    localStorage.clear();
     this.auth.LogOut();
   }
 }
