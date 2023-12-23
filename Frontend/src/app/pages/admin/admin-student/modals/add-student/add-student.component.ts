@@ -3,9 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
-import { WhiteSpace } from 'src/app/auth/whitespace.validator';
 import { AdminStudentService } from 'src/app/shared/services/admin/admin-student/admin-student.service';
-
+import { WhiteSpace } from 'src/app/shared/whitespace.validator';
 @Component({
   selector: 'app-add-student',
   templateUrl: './add-student.component.html',

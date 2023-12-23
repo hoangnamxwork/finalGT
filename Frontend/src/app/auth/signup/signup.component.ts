@@ -9,8 +9,7 @@ import {
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { AuthService } from '../../shared/services/auth/auth.service';
-import { WhiteSpace } from '../whitespace.validator';
-
+import { WhiteSpace } from 'src/app/shared/whitespace.validator';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
